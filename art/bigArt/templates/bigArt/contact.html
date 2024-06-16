@@ -1,0 +1,151 @@
+{% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .background-image {
+        background-image: url('{% static 'images/20.jpg' %}');
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        z-index: -1;
+    }
+    .form-label {
+        color: white;
+    }
+    .signup-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 90vh;
+    }
+    .signup-form {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .signup-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #fff;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .form-group {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .form-group-center {
+        display: flex;
+        justify-content: center;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+    .form-group button {
+        width: 10px;
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f4b400;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    .form-group button:hover {
+        background-color: #ffa500;
+    }
+    .errorlist {
+        color: white;
+        font-size: 14px;
+        margin-top: -10px;
+        margin-bottom: 10px;
+        list-style-type: none;
+        padding: 0;
+    }
+    .errorlist li {
+        color: #ffa500;
+    }
+    .row.g-3 {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+    .col-md-6, .col-md-12 {
+        flex: 1;
+        margin-right: 10px;
+    }
+    .col-md-6:last-child {
+        margin-right: 0;
+    }
+</style>
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+<div class="background-image"></div>
+<div class="signup-container" style="margin-top: 7rem;">
+    <div class="signup-form">
+        <h2>Contact Us Here</h2>
+        <form method="POST" style="width: 100%;">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+                <div class="col-md-6">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="{{ form.phone.id_for_label }}" class="form-label">{{ form.phone.label }}</label>
+                    {{ form.phone }}
+                </div>
+                <div class="col-md-6">
+                    <label for="{{ form.subject.id_for_label }}" class="form-label">{{ form.subject.label }}</label>
+                    {{ form.subject }}
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-12">
+                    <label for="{{ form.message.id_for_label }}" class="form-label">{{ form.message.label }}</label>
+                    {{ form.message }}
+                </div>
+            </div>
+            <div class="form-group form-group-center" style="padding-left: 210px; padding-right: 210px;">
+                <button type="submit">Submit</button>
+            </div>
+            {% if error_message %}
+            <div class="alert alert-danger" role="alert" style="margin-top: 15px;">
+                {{ error_message }}
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

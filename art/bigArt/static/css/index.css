@@ -1,0 +1,52 @@
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f3f1da;
+}
+
+.carousel .carousel-inner .carousel-item {
+    position: relative;
+}
+.carousel-item img {
+    max-height: 600px;
+    width: auto;
+    margin: 0 auto; 
+}
+
+
+
+.carousel .carousel-caption h5 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.carousel .carousel-caption p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.carousel .carousel-caption .btn {
+    background-color: #f4b400;
+    border: none;
+    color: white;
+    font-weight: 700;
+}
+.carousel .carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7); /* Adjust the transparency as needed */
+    padding: 30px; /* Increase padding for a wider caption */
+    border-radius: 15px; /* Adjust border radius for a rounded corner */
+    color: white;
+    text-align: center;
+    width: 80%; /* Set width to 80% of the carousel width */
+    max-width: 600px; /* Set maximum width for larger screens */
+    font-size: 24px; /* Increase font size for better readability */
+    line-height: 1.5; /* Set line height for better spacing */
+}
+
+
