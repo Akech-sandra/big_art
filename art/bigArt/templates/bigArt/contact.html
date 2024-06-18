@@ -97,19 +97,19 @@
         margin-right: 0;
     }
 </style>
-{% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-  </ul>
-{% endif %}
+
+  {% for message in messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 5em; margin-bottom: 1em;">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
 
 <div class="background-image"></div>
 <div class="signup-container" style="margin-top: 7rem;">
     <div class="signup-form">
         <h2>Contact Us Here</h2>
-        <form method="POST" style="width: 100%;">
+        <form method="POST" action="https://formspree.io/f/mayrrkvk" style="width: 100%;">
             {% csrf_token %}
             <div class="row g-3">
                 <div class="col-md-6">

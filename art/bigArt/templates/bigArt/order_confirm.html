@@ -1,0 +1,32 @@
+{% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+    <section id="order-confirmation-page">
+        <h1>Order Confirmation</h1>
+        <p>Thank you for your order!</p>
+        <ul>
+            {% for order in orders %}
+            <li>Order #{{ order.id }} - ${{ order.total_price }} - {{ order.created_at }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+</main>
+{% endblock %}
+
+
+
+{% comment %} {% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+    <section id="order-confirmation-page">
+        <h1>Order Confirmation</h1>
+        <p>Thank you for your order!</p>
+        <p>Your order has been successfully placed. We will send you an email confirmation shortly.</p>
+        <p>Total: ${{ total_price }}</p>
+    </section>
+</main>
+{% endblock %} {% endcomment %}

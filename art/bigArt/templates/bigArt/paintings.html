@@ -1,0 +1,22 @@
+{% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Paintings Gallery</h2>
+    <div class="row">
+        {% for painting in paintings %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ painting.image.url }}" class="card-img-top" alt="{{ painting.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ painting.title }}</h5>
+                    <p class="card-text"><strong>Artist:</strong> {{ painting.artist }}</p>
+                    <p class="card-text">{{ painting.description|truncatewords:20 }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

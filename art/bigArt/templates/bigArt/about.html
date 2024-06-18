@@ -4,134 +4,160 @@
 {% block content %}
 
 <style>
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-
+  body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
   }
-  
+
   main {
-    padding: 50px 0;
+      padding: 50px 0;
   }
-  
-  #about-us {
-    max-width: 1000px;
-    margin: 0 auto;
-    margin-top: 5em;
-    
-  }
-  
-  h1, h2 {
-    margin-bottom: 20px;
-    font-weight: bold;
-    font-size: 3em;
-    margin-bottom: 1em;
-    text-align: center;
-  }
-  
-  p {
-    line-height: 1.5;
-    margin-bottom: 20px;
-    font-size: 1.3em;
-  }
-  
-  
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 40px;
-  }
-  
-  .card {
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 10px;
-    width: calc(33% - 20px);
-  }
-  
-  
-  .media {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 40px;
-  }
-  
-  .media img,
-  .media video {
-    width: 50%;
-    margin: 0 10px;
-  }
-  
-  
-  ul {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 40px;
-  }
-  
-  li {
-    margin-bottom: 10px;
-  }  
 
-  .content1{
-    display: flex;
+  #about-us {
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-top: 5em;
   }
-    
+
+  h1, h2 {
+      margin-bottom: 20px;
+      font-weight: bold;
+      font-size: 3em;
+      margin-bottom: 1em;
+      text-align: center;
+  }
+
+  p {
+      line-height: 1.5;
+      margin-bottom: 20px;
+      font-size: 1.3em;
+  }
+
+  .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 40px;
+  }
+
+  .card {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 10px;
+      width: calc(33% - 20px);
+  }
+
+  .media {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 40px;
+  }
+
+  .media img, .media video {
+      width: 50%;
+      margin: 0 10px;
+  }
+
+  ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 40px;
+  }
+
+  li {
+      margin-bottom: 10px;
+  }
+
+  .content1 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+  }
+
+  .content1 img {
+      margin-right: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .content1 p {
+      flex: 1;
+      margin: 0;
+  }
 </style>
+
 <main>
     <section id="about-us">
-      <h1>About Us</h1>
-      <div class="content1">
-        <img src="{% static 'images/21.jpg' %}" alt="" height="300" width="500">
-      <p>Welcome to ArtCraft, where creativity meets opportunity! Our platform is dedicated to helping artists showcase and sell their unique creations to a global audience.</p>
-    </div>
-      <div class="card-container">
-        <div class="card">
-          <h2>Our Mission</h2>
-          <p>Our mission is to empower artists by providing them with the tools and resources they need to market their products effectively. We aim to create a vibrant community where art lovers can discover and purchase unique pieces directly from talented creators.</p>
+        <h1>About Us</h1>
+        <div class="carousel">
+            <div class="content1">
+                <img src="{% static 'images/21.jpg' %}" alt="ArtCraft Image" height="300" width="500">
+                <p>Welcome to BigArtUg, where creativity meets opportunity! Our platform is dedicated to helping artists showcase and sell their unique creations to a global audience.</p>
+            </div>
+            <div class="content1">
+                <img src="{% static 'images/22.jpg' %}" alt="ArtCraft Image" height="300" width="500">
+                <p>Discover amazing art pieces crafted by talented artists from around the world.</p>
+            </div>
+            <!-- Add more content divs as needed -->
         </div>
-        <div class="card">
-          <h2>Our Story</h2>
-          <p>Founded in [Year], ArtCraft was born out of a passion for art and a desire to support independent artists. We noticed a gap in the market for an inclusive platform that truly understands the needs of artists and provides comprehensive marketing solutions.</p>
-          <div class="media">
-            <img src="images/team.jpg" alt="Our Team">
+        
+        <div class="card-container">
+            <div class="card">
+                <h2>Our Mission</h2>
+                <p>Our mission is to empower artists by providing them with the tools and resources they need to market their products effectively. We aim to create a vibrant community where art lovers can discover and purchase unique pieces directly from talented creators.</p>
+            </div>
+            <div class="card">
+                <h2>Our Story</h2>
+                <p>Founded in [Year], BigArtUg was born out of a passion for art and a desire to support independent artists. We noticed a gap in the market for an inclusive platform that truly understands the needs of artists and provides comprehensive marketing solutions.</p>
+                <div class="media">
+                    <img src="{% static 'images/team.jpg' %}" alt="Our Team">
+                    <video controls>
+                        <source src="{% static 'videos/our_story.mp4' %}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+        <h2>Features and Services</h2>
+        <ul>
+            <li>Marketplace: A diverse range of art and craft products from around the world.</li>
+            <li>Promotional Tools: Innovative marketing tools to help artists reach a wider audience.</li>
+            <li>Community Engagement: Forums, events, and networking opportunities for artists and art enthusiasts.</li>
+        </ul>
+        <h2>Meet the Team</h2>
+        <p>Our team is composed of passionate individuals with backgrounds in art, technology, and marketing. Together, we strive to make ArtCraft the go-to platform for artists looking to market their work.</p>
+        <div class="media">
+            <img src="{% static 'images/team_working.jpg' %}" alt="Team Working">
             <video controls>
-              <source src="videos/our_story.mp4" type="video/mp4">
-              Your browser does not support the video tag.
+                <source src="{% static 'videos/team_video.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
-          </div>
         </div>
-        </div>
-  
-      <h2>Features and Services</h2>
-      <ul>
-        <li>Marketplace: A diverse range of art and craft products from around the world.</li>
-        <li>Promotional Tools: Innovative marketing tools to help artists reach a wider audience.</li>
-        <li>Community Engagement: Forums, events, and networking opportunities for artists and art enthusiasts.</li>
-      </ul>
-  
-      <h2>Meet the Team</h2>
-      <p>Our team is composed of passionate individuals with backgrounds in art, technology, and marketing. Together, we strive to make ArtCraft the go-to platform for artists looking to market their work.</p>
-      <div class="media">
-        <img src="images/team_working.jpg" alt="Team Working">
-        <video controls>
-          <source src="videos/team_video.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-  
-      <h2>Contact Us</h2>
-      <p>Have questions or need support? Reach out to us at <a href="mailto:support@artcraft.com">support@artcraft.com</a>.</p>
+        <h2>Contact Us</h2>
+        <p>Have questions or need support? Reach out to us at <a href="mailto:support@artcraft.com">support@artcraft.com</a>.</p>
     </section>
-  </main>
-  
+</main>
 
+<!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Include Slick Carousel -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!-- Initialize Slick Carousel -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.carousel').slick({
+            autoplay: true,
+            autoplaySpeed: 2000,
+            dots: true,
+            arrows: false,
+        });
+    });
+</script>
 
 {% endblock %}

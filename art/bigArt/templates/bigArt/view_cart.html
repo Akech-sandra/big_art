@@ -1,0 +1,60 @@
+{% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+    <section id="cart-page">
+        <h1>Your Shopping Cart</h1>
+        <ul>
+            {% for item in cart_items %}
+            <li>{{ item.product.name }} - ${{ item.product.price }} x {{ item.quantity }}
+                <form action="{% url 'remove_from_cart' item.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Remove</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        <p>Total: ${{ total_price }}</p>
+        <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+    </section>
+</main>
+{% endblock %}
+
+
+
+
+{% comment %} {% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+    <section id="cart-page">
+        <h1>Your Shopping Cart</h1>
+        <ul>
+            {% for item in cart %}
+            <li>{{ item.name }} - ${{ item.price }} <button onclick="removeFromCart({{ forloop.counter0 }})">Remove</button></li>
+            {% endfor %}
+        </ul>
+        <p>Total: ${{ total_price }}</p>
+        <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+    </section>
+</main>
+
+<script>
+    function removeFromCart(index) {
+        fetch(`/remove_from_cart/${index}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        }).then(response => {
+            if (response.ok) {
+                window.location.reload();
+            }
+        });
+    }
+  </script>
+  
+
+{% endblock %} {% endcomment %}
