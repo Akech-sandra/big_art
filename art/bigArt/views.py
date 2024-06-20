@@ -86,6 +86,9 @@ def about(request):
 def shop(request):
     return render(request, 'bigArt/shop.html')
 
+def paint(request):
+    return render(request, 'bigArt/painting.html')
+
 
 def checkout(request):
     cart = request.session.get('cart', [])

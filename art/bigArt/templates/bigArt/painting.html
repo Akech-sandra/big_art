@@ -1,0 +1,175 @@
+{% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+    }
+    
+    header .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    
+    header nav ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header nav ul li {
+        margin: 0 10px;
+    }
+    
+    header nav ul li a {
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    .hero {
+        background: url('hero-image.jpg') no-repeat center center/cover;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        text-align: center;
+        font-size: 36px;
+    }
+    
+    .filter-search {
+        display: flex;
+        justify-content: space-around;
+        padding: 20px;
+    }
+    
+    .filter-search input,
+    .filter-search select {
+        padding: 10px;
+        font-size: 16px;
+    }
+    
+    .paintings-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 20px;
+    }
+    
+    .painting-card {
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 30%;
+        margin: 20px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    
+    .painting-card img {
+        max-width: 100%;
+        border-radius: 5px;
+    }
+    
+    .painting-card h2 {
+        font-size: 24px;
+        margin: 10px 0;
+    }
+    
+    .painting-card p {
+        margin: 10px 0;
+    }
+    
+    .painting-card button {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+    
+    .pagination a {
+        margin: 0 5px;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    
+    
+</style>
+
+<main>
+    <div class="filter-search">
+        <input type="text" placeholder="Search paintings...">
+        <select>
+            <option value="all">All Categories</option>
+            <option value="abstract">Abstract</option>
+            <option value="landscape">Landscape</option>
+            <option value="portrait">Portrait</option>
+        </select>
+        <select>
+            <option value="all">All Artists</option>
+            <option value="artist1">Artist 1</option>
+            <option value="artist2">Artist 2</option>
+        </select>
+        <select>
+            <option value="all">All Prices</option>
+            <option value="low-to-high">Low to High</option>
+            <option value="high-to-low">High to Low</option>
+        </select>
+    </div>
+
+    <div class="paintings-grid">
+        <div class="painting-card">
+            <img src="painting1.jpg" alt="Painting 1">
+            <h2>Title of Painting 1</h2>
+            <p>Artist: John Doe</p>
+            <p>$500</p>
+            <p>Short description of the painting.</p>
+            <button>View Details</button>
+        </div>
+        <div class="painting-card">
+            <img src="painting2.jpg" alt="Painting 2">
+            <h2>Title of Painting 2</h2>
+            <p>Artist: Jane Smith</p>
+            <p>$750</p>
+            <p>Short description of the painting.</p>
+            <button>View Details</button>
+        </div>
+        <!-- More painting cards -->
+    </div>
+
+    <div class="pagination">
+        <a href="#">&#171; Previous</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">Next &#187;</a>
+    </div>
+</main>
+
+{% endblock %}
