@@ -17,19 +17,3 @@
 
 
 
-{% comment %} {% extends "bigArt/base.html" %}
-{% load static %}
-
-{% block content %}
-<main>
-    <section id="checkout-page">
-        <h1>Checkout</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <p>Total: ${{ total_price }}</p>
-            <button type="submit">Confirm Order</button>
-        </form>
-    </section>
-</main>
-{% endblock %} {% endcomment %}

@@ -90,6 +90,304 @@
       flex: 1;
       margin: 0;
   }
+
+
+
+
+main {
+    padding: 50px 0;
+}
+
+#about-us {
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: 5em;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 3em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    margin-left: 5px; /* Add left margin */
+    margin-right: 5px; /* Add right margin */
+}
+
+.card {
+    background-color: #fffde7;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    margin: 10px; /* Adjust margin to create space between cards */
+    width: calc(50% - 20px); /* Set the width of the card and consider margin */
+    max-width: 1000px; /* Limit the maximum width of the card */
+}
+
+.card p{
+    font-size: 18px;
+}
+
+
+
+.media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.media img, .media video {
+    width: 45%;
+    margin: 0 10px;
+    border-radius: 15px;
+}
+
+.media video{
+    height: 400px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 40px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.content1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.content1 img {
+    margin-right: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.content1 p {
+    flex: 1;
+    margin: 0;
+    background-color: #fff9c4;
+    padding: 20px;
+}
+
+/* Add styles for carousel */
+.carousel {
+    margin-bottom: 40px;
+}
+
+.carousel img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Add styles for testimonials */
+.testimonial {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Add styles for key features */
+.key-features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.key-feature {
+    width: calc(50% - 10px);
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.key-feature h3 {
+    margin-top: 0;
+}
+
+/* Add styles for call-to-action */
+.cta {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.cta a {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Add styles for social proof */
+.social-proof {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.social-proof img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.social-proof p {
+    flex: 1;
+    margin-left: 20px;
+}
+
+/* Add styles for carousel description */
+.carousel .content1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.carousel img {
+    flex: 1;
+    margin-right: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.carousel .description {
+    flex: 2;
+    
+}
+
+.card p:not(.show-more) {
+    overflow: hidden;
+    height: 300px; 
+}
+
+.card p.show-more {
+    height: auto;
+}
+
+
+
+.card p.story-content {
+    overflow: hidden;
+    height: 100px;
+    transition: height 0.3s ease; 
+}
+
+.card p.story-content.show-more {
+    height: auto;
+}
+
+#read-more {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.card1 {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
+    height: 100%;
+    background-color: #fffde7;
+}
+
+.card-img-top {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    flex: 1;
+    width: 100%;
+    height: auto;
+}
+
+.card-title {
+    color: #333;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+.card-text {
+    color: #666;
+}
+
+.card-body {
+    padding: 20px;
+    flex: 1;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.container1 {
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.card2 {
+    background-color: #fff9c4;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 800px;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 30px;
+    
+}
+
+/* Media query to make cards stack horizontally on smaller screens */
+@media (min-width: 768px) {
+    .row {
+        display: flex;
+    }
+    .col-md-4 {
+        flex: 1;
+    }
+}
+
+
+
 </style>
 
 <main>
@@ -97,57 +395,94 @@
         <h1>About Us</h1>
         <div class="carousel">
             <div class="content1">
-                <img src="{% static 'images/21.jpg' %}" alt="ArtCraft Image" height="300" width="500">
-                <p>Welcome to BigArtUg, where creativity meets opportunity! Our platform is dedicated to helping artists showcase and sell their unique creations to a global audience.</p>
+                <img src="{% static 'images/30.png' %}" alt="ArtCraft Image" height="300" width="500">
+                <p>Welcome to ArtCraft, your gateway to a world of artistic wonders! Our platform is a vibrant marketplace where artists from diverse backgrounds showcase their talents and sell their creations to art enthusiasts worldwide. Join us on a journey of creativity and discovery!</p>
             </div>
             <div class="content1">
-                <img src="{% static 'images/22.jpg' %}" alt="ArtCraft Image" height="300" width="500">
-                <p>Discover amazing art pieces crafted by talented artists from around the world.</p>
+                <img src="{% static 'images/27.png' %}" alt="ArtCraft Image" height="300" width="500">
+                <p>Discover the beauty of handmade artistry on ArtCraft. From intricately designed jewelry to beautifully crafted pottery, our platform features a wide range of unique and exquisite art pieces that are sure to captivate your heart and soul.</p>
             </div>
-            <!-- Add more content divs as needed -->
+            <div class="content1">
+                <img src="{% static 'images/41.jpeg' %}" alt="ArtCraft Image" height="300" width="500">
+                <p>At ArtCraft, we believe in empowering artists and promoting their work on a global scale. By providing a platform for artists to showcase their talents and connect with a larger audience, we aim to revolutionize the way art is marketed and appreciated.</p>
+            </div>
+            <div class="content1">
+                <img src="{% static 'images/34.jpg' %}" alt="ArtCraft Image" height="300" width="500">
+                <p>Join a community of artists and art lovers on ArtCraft. Engage in discussions, share your passion for art, and explore new artistic horizons. Whether you're an artist looking to promote your work or an art enthusiast seeking inspiration, ArtCraft is the place for you.</p>
+            </div>
+            <div class="content1">
+                <img src="{% static 'images/31.png' %}" alt="ArtCraft Image" height="300" width="500">
+                <p>Experience the joy of owning a piece of art that is truly unique and one-of-a-kind. At ArtCraft, each artwork tells a story and reflects the passion and creativity of its creator. Browse our collection and find that perfect piece to adorn your space.</p>
+            </div>
         </div>
         
         <div class="card-container">
             <div class="card">
-                <h2>Our Mission</h2>
-                <p>Our mission is to empower artists by providing them with the tools and resources they need to market their products effectively. We aim to create a vibrant community where art lovers can discover and purchase unique pieces directly from talented creators.</p>
-            </div>
-            <div class="card">
                 <h2>Our Story</h2>
-                <p>Founded in [Year], BigArtUg was born out of a passion for art and a desire to support independent artists. We noticed a gap in the market for an inclusive platform that truly understands the needs of artists and provides comprehensive marketing solutions.</p>
-                <div class="media">
-                    <img src="{% static 'images/team.jpg' %}" alt="Our Team">
-                    <video controls>
-                        <source src="{% static 'videos/our_story.mp4' %}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                <p>
+                    Established in 2024, BigArtUg was conceived from a profound love for artistic expression and a commitment to championing the endeavors of independent artists. Our journey began with a keen observation of the art market, recognizing a significant void in platforms that cater comprehensively to the needs of artists. This realization ignited our mission to create an inclusive and empowering space for artists to thrive.
+                    <a href="#" id="read-more">Read More</a><br>
+                    At BigArtUg, we are dedicated to bridging the gap between artists and their audience by providing innovative marketing solutions tailored to their unique needs. Our platform is more than just a marketplace; it's a community where artists can showcase their creations, connect with enthusiasts, and gain the recognition they deserve.
+                    
+                    We understand the challenges artists face in marketing their products, which is why we have curated a range of tools and resources to support them every step of the way. From personalized marketing strategies to educational workshops, we are committed to empowering artists and helping them succeed in the competitive art market.
+                    
+                    Join us in our mission to revolutionize the way art is marketed and appreciated. Whether you're an artist looking to showcase your work or an art lover seeking inspiration, BigArtUg is your ultimate destination for all things art and craft.
+                    
+                </p>
+            </div>
+            
+                <div class="card">
+                    <h2>Our Mission</h2>
+                    <p>Our mission is to empower artists by providing them with the tools and resources they need to market their products effectively. We aim to create a vibrant community where art lovers can discover and purchase unique pieces directly from talented creators.</p>
                 </div>
             </div>
         </div>
         <h2>Features and Services</h2>
-        <ul>
-            <li>Marketplace: A diverse range of art and craft products from around the world.</li>
-            <li>Promotional Tools: Innovative marketing tools to help artists reach a wider audience.</li>
-            <li>Community Engagement: Forums, events, and networking opportunities for artists and art enthusiasts.</li>
-        </ul>
+        <div class="container1">
+                        <div class="col-md-4">
+                            <div class="card1">
+                                <img src="{% static 'images/46.jpeg' %}" class="card-img-top" alt="Marketplace">
+                                <div class="card-body">
+                                    <p class="card-text" style="color: black;" ><b style="text-align: center;">Marketplace </b> <br>Discover a world of creativity and craftsmanship at your fingertips with our vibrant marketplace! Step into a global bazaar brimming with a diverse array of art and craft products, each telling its own unique story. From intricate handwoven textiles and exquisite pottery to striking contemporary paintings and bespoke jewelry, our marketplace offers a treasure trove of artistic expressions from every corner of the globe. <a href="#" id="read-more">Read More</a> <br>Every piece is a testament to the skill and passion of talented artisans, bringing you closer to cultures and traditions from far and wide. Whether you’re seeking a one-of-a-kind gift, a statement piece for your home, or simply looking to indulge in the beauty of handmade art, our platform connects you directly with creators, ensuring that every purchase supports the artist behind the work. Immerse yourself in a world where creativity knows no boundaries and let our marketplace inspire your own artistic journey. Explore, discover, and connect with the heartbeat of global art and craft.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card1">
+                                <img src="{% static 'images/49.png' %}" class="card-img-top" alt="Promotional Tools">
+                                <div class="card-body">
+                                    <p class="card-text" style="color: black;">Promotional Tools <br>Elevate your artistic journey with our cutting-edge promotional tools, crafted specifically to amplify your reach and impact. Imagine having access to a suite of innovative marketing solutions that put your art in front of a global audience, breaking through geographical boundaries and connecting with enthusiasts everywhere. <a href="#" id="read-more">Read More</a> <br>Our tools include personalized social media campaigns, interactive online galleries, and SEO-optimized profiles to ensure your work gets the visibility it deserves. With targeted advertising options and analytics at your fingertips, you can fine-tune your strategy to engage more viewers and turn them into loyal fans. Whether you're a seasoned artist or just starting out, our promotional tools are designed to help you build a compelling brand and showcase your unique voice to the world. Join our platform and watch your audience grow, as you captivate and inspire with your art.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card1">
+                                <img src="{% static 'images/53.jpg' %}" class="card-img-top" alt="Community Engagement">
+                                <div class="card-body">
+                                    <p class="card-text" style="color: black;">Community Engagement <br> Unlock a vibrant and thriving community where creativity knows no bounds! Our platform is not just a marketplace, but a dynamic hub for artists and art enthusiasts alike. Dive into engaging forums where ideas flourish, and innovative techniques are shared. <a href="#" id="read-more">Read More</a> <br>Attend exclusive events that bring together the brightest minds in the art world, offering you unparalleled opportunities to network and collaborate. Whether you're an artist looking to showcase your work or an art lover eager to discover new talent, our community is designed to inspire and connect. Join us and be a part of a supportive, energetic environment that celebrates and nurtures artistic expression.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
         <h2>Meet the Team</h2>
-        <p>Our team is composed of passionate individuals with backgrounds in art, technology, and marketing. Together, we strive to make ArtCraft the go-to platform for artists looking to market their work.</p>
+        <p class="card2">Our team is composed of passionate individuals with backgrounds in art, technology, and marketing. Together, we strive to make ArtCraft the go-to platform for artists looking to market their work.</p>
         <div class="media">
-            <img src="{% static 'images/team_working.jpg' %}" alt="Team Working">
+            <img src="{% static 'images/54.jpg' %}" alt="Team Working">
             <video controls>
                 <source src="{% static 'videos/team_video.mp4' %}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
         <h2>Contact Us</h2>
-        <p>Have questions or need support? Reach out to us at <a href="mailto:support@artcraft.com">support@artcraft.com</a>.</p>
+        <p>Have questions or need support? Reach out to us at <a href="mailto:support@artcraft.com">bigartug@gmail.com</a>.</p>
     </section>
 </main>
 
-<!-- Include jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Include Slick Carousel -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <!-- Initialize Slick Carousel -->
 <script type="text/javascript">
     $(document).ready(function(){
@@ -157,7 +492,18 @@
             dots: true,
             arrows: false,
         });
+
+        // Update the click event binding for the "Read More" button
+        $('.card #read-more').click(function(e){
+            e.preventDefault();
+            console.log('Button clicked');
+            $(this).prev().toggleClass('show-more');
+            $(this).text($(this).text() == 'Read More' ? 'Read Less' : 'Read More');
+        });
     });
 </script>
+
+    
+
 
 {% endblock %}
