@@ -286,38 +286,6 @@ li {
     
 }
 
-.card p:not(.show-more) {
-    overflow: hidden;
-    height: 300px; 
-}
-
-.card p.show-more {
-    height: auto;
-}
-
-
-
-.card p.story-content {
-    overflow: hidden;
-    height: 100px;
-    transition: height 0.3s ease; 
-}
-
-.card p.story-content.show-more {
-    height: auto;
-}
-
-#read-more {
-    display: inline-block;
-    background-color: #333;
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-top: 10px;
-    cursor: pointer;
-}
 
 .card1 {
     border: 1px solid #ddd;
@@ -376,6 +344,25 @@ li {
     
 }
 
+#more {display: none;}
+
+button#myBtn {
+    background-color: #f4b400;
+    color: black; /* Adjust the text color to contrast with the yellow background */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    width: 150px;
+}
+
+/* Optional: Add a hover effect for the button */
+button#myBtn:hover {
+    background-color: darkorange; /* Change the background color on hover */
+    color: white;}
+
 /* Media query to make cards stack horizontally on smaller screens */
 @media (min-width: 768px) {
     .row {
@@ -420,17 +407,18 @@ li {
             <div class="card">
                 <h2>Our Story</h2>
                 <p>
-                    Established in 2024, BigArtUg was conceived from a profound love for artistic expression and a commitment to championing the endeavors of independent artists. Our journey began with a keen observation of the art market, recognizing a significant void in platforms that cater comprehensively to the needs of artists. This realization ignited our mission to create an inclusive and empowering space for artists to thrive.
-                    <a href="#" id="read-more">Read More</a><br>
+                    Established in 2024, BigArtUg was conceived from a profound love for artistic expression and a commitment to championing the endeavors of independent artists. Our journey began with a keen observation of the art market, recognizing a significant void in platforms that cater comprehensively to the needs of artists.<span id="dots">...</span><span id="more"> This realization ignited our mission to create an inclusive and empowering space for artists to thrive.
+            
                     At BigArtUg, we are dedicated to bridging the gap between artists and their audience by providing innovative marketing solutions tailored to their unique needs. Our platform is more than just a marketplace; it's a community where artists can showcase their creations, connect with enthusiasts, and gain the recognition they deserve.
                     
                     We understand the challenges artists face in marketing their products, which is why we have curated a range of tools and resources to support them every step of the way. From personalized marketing strategies to educational workshops, we are committed to empowering artists and helping them succeed in the competitive art market.
                     
                     Join us in our mission to revolutionize the way art is marketed and appreciated. Whether you're an artist looking to showcase your work or an art lover seeking inspiration, BigArtUg is your ultimate destination for all things art and craft.
                     
-                </p>
+                </span></p>
+                <button onclick="myFunction()" id="myBtn">Read more</button>
             </div>
-            
+        
                 <div class="card">
                     <h2>Our Mission</h2>
                     <p>Our mission is to empower artists by providing them with the tools and resources they need to market their products effectively. We aim to create a vibrant community where art lovers can discover and purchase unique pieces directly from talented creators.</p>
@@ -443,7 +431,8 @@ li {
                             <div class="card1">
                                 <img src="{% static 'images/46.jpeg' %}" class="card-img-top" alt="Marketplace">
                                 <div class="card-body">
-                                    <p class="card-text" style="color: black;" ><b style="text-align: center;">Marketplace </b> <br>Discover a world of creativity and craftsmanship at your fingertips with our vibrant marketplace! Step into a global bazaar brimming with a diverse array of art and craft products, each telling its own unique story. From intricate handwoven textiles and exquisite pottery to striking contemporary paintings and bespoke jewelry, our marketplace offers a treasure trove of artistic expressions from every corner of the globe. <a href="#" id="read-more">Read More</a> <br>Every piece is a testament to the skill and passion of talented artisans, bringing you closer to cultures and traditions from far and wide. Whether you’re seeking a one-of-a-kind gift, a statement piece for your home, or simply looking to indulge in the beauty of handmade art, our platform connects you directly with creators, ensuring that every purchase supports the artist behind the work. Immerse yourself in a world where creativity knows no boundaries and let our marketplace inspire your own artistic journey. Explore, discover, and connect with the heartbeat of global art and craft.</p>
+                                    <p class="card-text" style="color: black;" ><b style="text-align: center;">Marketplace </b> <br>Discover a world of creativity and craftsmanship at your fingertips with our vibrant marketplace! Step into a global bazaar brimming with a diverse array of art and craft products, each telling its own unique story. <span id="dots">...</span><span id="more">  From intricate handwoven textiles and exquisite pottery to striking contemporary paintings and bespoke jewelry, our marketplace offers a treasure trove of artistic expressions from every corner of the globe. Every piece is a testament to the skill and passion of talented artisans, bringing you closer to cultures and traditions from far and wide. Whether you’re seeking a one-of-a-kind gift, a statement piece for your home, or simply looking to indulge in the beauty of handmade art, our platform connects you directly with creators, ensuring that every purchase supports the artist behind the work. Immerse yourself in a world where creativity knows no boundaries and let our marketplace inspire your own artistic journey. Explore, discover, and connect with the heartbeat of global art and craft.</span></p>
+                                    <button onclick="myFunction()" id="myBtn">Read more</button>
                                 </div>
                             </div>
                         </div>
@@ -451,7 +440,8 @@ li {
                             <div class="card1">
                                 <img src="{% static 'images/49.png' %}" class="card-img-top" alt="Promotional Tools">
                                 <div class="card-body">
-                                    <p class="card-text" style="color: black;">Promotional Tools <br>Elevate your artistic journey with our cutting-edge promotional tools, crafted specifically to amplify your reach and impact. Imagine having access to a suite of innovative marketing solutions that put your art in front of a global audience, breaking through geographical boundaries and connecting with enthusiasts everywhere. <a href="#" id="read-more">Read More</a> <br>Our tools include personalized social media campaigns, interactive online galleries, and SEO-optimized profiles to ensure your work gets the visibility it deserves. With targeted advertising options and analytics at your fingertips, you can fine-tune your strategy to engage more viewers and turn them into loyal fans. Whether you're a seasoned artist or just starting out, our promotional tools are designed to help you build a compelling brand and showcase your unique voice to the world. Join our platform and watch your audience grow, as you captivate and inspire with your art.</p>
+                                    <p class="card-text" style="color: black;">Promotional Tools <br>Elevate your artistic journey with our cutting-edge promotional tools, crafted specifically to amplify your reach and impact. Imagine having access to a suite of innovative marketing solutions that put your art in front of a global audience, <span id="dots">...</span><span id="more">breaking through geographical boundaries and connecting with enthusiasts everywhere. Our tools include personalized social media campaigns, interactive online galleries, and SEO-optimized profiles to ensure your work gets the visibility it deserves. With targeted advertising options and analytics at your fingertips, you can fine-tune your strategy to engage more viewers and turn them into loyal fans. Whether you're a seasoned artist or just starting out, our promotional tools are designed to help you build a compelling brand and showcase your unique voice to the world. Join our platform and watch your audience grow, as you captivate and inspire with your art.</span></p>
+                                    <button onclick="myFunction()" id="myBtn">Read more</button>
                                 </div>
                             </div>
                         </div>
@@ -459,7 +449,8 @@ li {
                             <div class="card1">
                                 <img src="{% static 'images/53.jpg' %}" class="card-img-top" alt="Community Engagement">
                                 <div class="card-body">
-                                    <p class="card-text" style="color: black;">Community Engagement <br> Unlock a vibrant and thriving community where creativity knows no bounds! Our platform is not just a marketplace, but a dynamic hub for artists and art enthusiasts alike. Dive into engaging forums where ideas flourish, and innovative techniques are shared. <a href="#" id="read-more">Read More</a> <br>Attend exclusive events that bring together the brightest minds in the art world, offering you unparalleled opportunities to network and collaborate. Whether you're an artist looking to showcase your work or an art lover eager to discover new talent, our community is designed to inspire and connect. Join us and be a part of a supportive, energetic environment that celebrates and nurtures artistic expression.</p>
+                                    <p class="card-text" style="color: black;">Community Engagement <br> Unlock a vibrant and thriving community where creativity knows no bounds! Our platform is not just a marketplace, but a dynamic hub for artists and art enthusiasts alike. <span id="dots">...</span><span id="more">Dive into engaging forums where ideas flourish, and innovative techniques are shared.  Attend exclusive events that bring together the brightest minds in the art world, offering you unparalleled opportunities to network and collaborate. Whether you're an artist looking to showcase your work or an art lover eager to discover new talent, our community is designed to inspire and connect. Join us and be a part of a supportive, energetic environment that celebrates and nurtures artistic expression.</span></p>
+                                    <button onclick="myFunction()" id="myBtn">Read more</button>
                                 </div>
                             </div>
                         </div>
@@ -492,15 +483,25 @@ li {
             dots: true,
             arrows: false,
         });
-
-        // Update the click event binding for the "Read More" button
-        $('.card #read-more').click(function(e){
-            e.preventDefault();
-            console.log('Button clicked');
-            $(this).prev().toggleClass('show-more');
-            $(this).text($(this).text() == 'Read More' ? 'Read Less' : 'Read More');
-        });
     });
+
+
+    function myFunction() {
+        var dots = document.getElementById("dots");
+        var moreText = document.getElementById("more");
+        var btnText = document.getElementById("myBtn");
+      
+        if (dots.style.display === "none") {
+          dots.style.display = "inline";
+          btnText.innerHTML = "Read more";
+          moreText.style.display = "none";
+        } else {
+          dots.style.display = "none";
+          btnText.innerHTML = "Read less";
+          moreText.style.display = "inline";
+        }
+      }
+
 </script>
 
     

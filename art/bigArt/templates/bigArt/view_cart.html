@@ -2,59 +2,178 @@
 {% load static %}
 
 {% block content %}
-<main>
-    <section id="cart-page">
-        <h1>Your Shopping Cart</h1>
-        <ul>
-            {% for item in cart_items %}
-            <li>{{ item.product.name }} - ${{ item.product.price }} x {{ item.quantity }}
-                <form action="{% url 'remove_from_cart' item.id %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Remove</button>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
-        <p>Total: ${{ total_price }}</p>
-        <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
-    </section>
-</main>
-{% endblock %}
-
-
-
-
-{% comment %} {% extends "bigArt/base.html" %}
-{% load static %}
-
-{% block content %}
-<main>
-    <section id="cart-page">
-        <h1>Your Shopping Cart</h1>
-        <ul>
-            {% for item in cart %}
-            <li>{{ item.name }} - ${{ item.price }} <button onclick="removeFromCart({{ forloop.counter0 }})">Remove</button></li>
-            {% endfor %}
-        </ul>
-        <p>Total: ${{ total_price }}</p>
-        <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
-    </section>
-</main>
-
-<script>
-    function removeFromCart(index) {
-        fetch(`/remove_from_cart/${index}/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        }).then(response => {
-            if (response.ok) {
-                window.location.reload();
-            }
-        });
+<style>
+    .background-image {
+        background-image: url('{% static 'images/20.jpg' %}');
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        z-index: -1;
     }
-  </script>
-  
-
-{% endblock %} {% endcomment %}
+    .cart-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .cart-page {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .cart-page h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #fff;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .cart-page table {
+        width: 100%;
+        color: #fff;
+        border-collapse: collapse;
+    }
+    .cart-page table th, .cart-page table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .cart-page table th {
+        font-weight: bold;
+    }
+    .cart-page table td img {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        margin-right: 15px;
+    }
+    .cart-page table td .quantity {
+        display: flex;
+        align-items: center;
+    }
+    .cart-page table td .quantity input {
+        width: 50px;
+        text-align: center;
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: #fff;
+        color: #000;
+    }
+    .cart-page table td .remove-btn {
+        background-color: #ff4d4d;
+        color: #ffffff;
+        padding: 0.5em 1em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .cart-page table td .remove-btn:hover {
+        background-color: #ffa500;
+    }
+    .cart-summary {
+        margin-top: 20px;
+        width: 100%;
+        text-align: right;
+        color: #fff;
+    }
+    .cart-summary p {
+        font-size: 1.2em;
+        margin: 10px 0;
+    }
+    .cart-actions {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 20px;
+    }
+    .continue-shopping {
+        background-color: #28a745;
+        color: #ffffff;
+        padding: 0.75em 1.5em;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .continue-shopping:hover {
+        background-color: #218838;
+    }
+    .checkout-btn {
+        background-color:#f4b400;
+        color: #ffffff;
+        padding: 0.75em 1.5em;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .checkout-btn:hover {
+        background-color: #ffa500;
+    }
+</style>
+<div class="background-image"></div>
+<div class="cart-container">
+    <section class="cart-page">
+        <h1>Your Shopping Cart</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                        {{ item.product.name }}
+                    </td>
+                    <td>${{ item.product.price }}</td>
+                    <td class="quantity">
+                        <form action="{% url 'update_cart' item.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                            <button type="submit" class="update-btn">Update</button>
+                        </form>
+                    </td>
+                    {% comment %} <td>${{ item.product.price|multiply:item.quantity }}</td> {% endcomment %}
+                    <td>
+                        <form action="{% url 'remove_from_cart' item.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-btn">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="cart-summary">
+            <p>Total: ${{ total_price }}</p>
+        </div>
+        <div class="cart-actions">
+            <a href="{% url 'shop' %}" class="continue-shopping">Continue Shopping</a>
+            <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+        </div>
+    </section>
+</div>
+{% endblock %}
