@@ -9,7 +9,7 @@ urlpatterns = [
     # path('login/', auth_views.LoginView.as_view(template_name='bigArt/login.html'), name='login'),
     # path('login/', views.login_view, name='login'),   
     path('login/', views.user_login, name='login'),
-    path('sign/', views.signup, name='signup_html'), 
+    path('sign/', views.signup, name='signup'), 
     path('contact/', views.contact_us, name='contact_us'),
     path('about/', views.about, name='about'),
     path('shop/', views.shop, name='shop'),
@@ -20,6 +20,7 @@ urlpatterns = [
     path('remove_from_cart/<int:index>/', views.remove_from_cart, name='remove_from_cart'),
     path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('paintings/', views.paintings_view, name='paintings'),
+    path('logout/', views.logout_view, name='logout'),
 
     
 

@@ -78,6 +78,8 @@ class CheckoutForm(forms.Form):
     email = forms.EmailField()
     address = forms.CharField(widget=forms.Textarea)
     payment_method = forms.ChoiceField(choices=[('card', 'Credit Card'), ('paypal', 'PayPal')])
-            
-    
-    
+
+class ProductForm(forms.Form):
+    class Meta:
+        model = Product
+        fields = '__all__'

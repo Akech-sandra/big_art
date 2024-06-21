@@ -7,7 +7,7 @@ from.models import *
 from.forms import *
 from django.contrib.auth.decorators import login_required
 from .forms import AuthenticationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from .models import CustomUser
 from django.db import IntegrityError
 from django.contrib.auth.models import User
@@ -19,10 +19,6 @@ def index(request):
     return render(request, 'bigArt/index.html')
 
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.contrib import messages
-from .forms import SignUpForm
 
 def signup(request):
     if request.method == 'POST':
@@ -66,6 +62,10 @@ def user_login(request):
             messages.error(request, 'Invalid email or password')
     return render(request, 'bigArt/login.html')
 
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
 def contact_us(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -84,7 +84,12 @@ def about(request):
     return render(request, 'bigArt/about.html')
 
 def shop(request):
-    return render(request, 'bigArt/shop.html')
+    products = Product.objects.all()
+    context = {
+        'products': products,
+        'user_is_authenticated': request.user.is_authenticated
+    }
+    return render(request, 'bigArt/shop.html', context)
 
 def paint(request):
     return render(request, 'bigArt/painting.html')
