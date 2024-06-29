@@ -119,6 +119,12 @@
 <main>
     <section id="shopping-page">
         <h1>Shop</h1>
+        <div class="search">
+            <form action="" method="GET" >
+              {{ product.form }}
+              <input type="submit" value="Search item " class="btn btn-primary"/>
+            </form>         
+          </div>
         <div class="product-grid">
             {% for product in products %}
             <div class="product-card">

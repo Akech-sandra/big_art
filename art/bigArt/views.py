@@ -11,6 +11,7 @@ from django.contrib.auth import login, logout
 from .models import CustomUser
 from django.db import IntegrityError
 from django.contrib.auth.models import User
+from .filters import *
 
 
 # Create your views here.
@@ -66,22 +67,32 @@ def logout_view(request):
     logout(request)
     return redirect('index')
 
-def contact_us(request):
+# def contact_us(request):
+#     if request.method == 'POST':
+#         form = ContactForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Your message has been sent successfully!')
+#             return redirect('contact_us')
+#         else:
+#             messages.error(request, 'There was an error in your form submission. Please correct the errors below.')
+#     else:
+#         form = ContactForm()
+    
+#     return render(request, 'bigArt/contact.html', {'form': form})  
+
+def about(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your message has been sent successfully!')
-            return redirect('contact_us')
+            return redirect('about')
         else:
             messages.error(request, 'There was an error in your form submission. Please correct the errors below.')
     else:
         form = ContactForm()
-    
-    return render(request, 'bigArt/contact.html', {'form': form})  
-
-def about(request):
-    return render(request, 'bigArt/about.html')
+    return render(request, 'bigArt/about.html', {'form': form})
 
 def shop(request):
     products = Product.objects.all()
@@ -168,7 +179,16 @@ def paintings_view(request):
     return render(request, 'bigArt/paintings.html', {'paintings': paintings})
 
 
-
+def shop(request):
+    products = Product.objects.all().order_by('id')
+    product=ShopFilter(request.GET,queryset=products)
+    products=product.qs
+    context = {
+        'products': products,
+        'product': product,
+        'user_is_authenticated': request.user.is_authenticated
+    }
+    return render(request, 'bigArt/shop.html', context)
 
 
 
