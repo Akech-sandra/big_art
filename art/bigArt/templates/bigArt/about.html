@@ -608,12 +608,15 @@ button#myBtn:hover {
     </section>
 </main>
 
+<script src="{% static 'js/carousel.js' %}"></script>
+
+<script>$('.carousel').carousel();</script>
     <!-- Include jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Include Slick Carousel -->
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <!-- Initialize Slick Carousel -->
-<script type="text/javascript">
+{% comment %} <script type="text/javascript">
     $(document).ready(function(){
         $('.carousel').slick({
             autoplay: true,
@@ -640,9 +643,10 @@ button#myBtn:hover {
         }
       }
 
-</script>
+</script> {% endcomment %}
 
-    
+
+
 
 
 {% endblock %}

@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -10,164 +9,48 @@
         padding: 0;
     }
 
-    main{
+    main {
         margin-top: 6em;
     }
-    
-    header {
+
+    .painting-detail {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         align-items: center;
-        background-color: #333;
-        color: #fff;
-        padding: 10px 20px;
+        padding: 20px;
     }
-    
-    header .logo {
-        font-size: 24px;
-        font-weight: bold;
+
+    .painting-detail img {
+        max-width: 50%;
+        border-radius: 5px;
+        margin-bottom: 20px;
     }
-    
-    header nav ul {
-        list-style: none;
-        display: flex;
-        margin: 0;
-        padding: 0;
-    }
-    
-    header nav ul li {
-        margin: 0 10px;
-    }
-    
-    header nav ul li a {
-        color: #fff;
-        text-decoration: none;
-    }
-    
-    .hero {
-        background: url('hero-image.jpg') no-repeat center center/cover;
-        height: 300px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        text-align: center;
+
+    .painting-detail h2 {
         font-size: 36px;
+        margin: 10px 0;
     }
-    
-    .filter-search {
-        display: flex;
-        justify-content: space-around;
-        padding: 20px;
+
+    .painting-detail p {
+        margin: 10px 0;
+        font-size: 18px;
     }
-    
-    .filter-search input,
-    .filter-search select {
-        padding: 10px;
-        font-size: 16px;
-    }
-    
-    .paintings-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        padding: 20px;
-    }
-    
-    .painting-card {
-        background-color: #f4f4f4;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        width: 30%;
-        margin: 20px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-    
-    .painting-card img {
-        max-width: 100%;
-        border-radius: 5px;
-    }
-    
-    .painting-card h2 {
+
+    .painting-detail .price {
         font-size: 24px;
-        margin: 10px 0;
-    }
-    
-    .painting-card p {
-        margin: 10px 0;
-    }
-    
-    .painting-card button {
-        padding: 10px 20px;
-        background-color: #333;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    
-    .pagination {
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-    }
-    
-    .pagination a {
-        margin: 0 5px;
-        padding: 10px 15px;
-        text-decoration: none;
         color: #333;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+        margin: 10px 0;
     }
-    
-    
 </style>
 
 <main>
-    <div class="filter-search">
-        <input type="text" placeholder="Search paintings...">
-        
-        <select>
-            <option value="all">All Artists</option>
-            <option value="artist1">Amuku Godwin</option>
-            <option value="artist2">Akech Sandra</option>
-        </select>
-        <select>
-            <option value="all">All Prices</option>
-            <option value="low-to-high">Low to High</option>
-            <option value="high-to-low">High to Low</option>
-        </select>
-    </div>
-
-    <div class="paintings-grid">
-        <div class="painting-card">
-            <img src="painting1.jpg" alt="Painting 1">
-            <h2>Title of Painting 1</h2>
-            <p>Artist: Amuku Godwin</p>
-            <p>$500</p>
-            <p>Short description of the painting.</p>
-            <button>View Details</button>
-        </div>
-        <div class="painting-card">
-            <img src="painting2.jpg" alt="Painting 2">
-            <h2>Title of Painting 2</h2>
-            <p>Artist: Akech Sandra</p>
-            <p>$750</p>
-            <p>Short description of the painting.</p>
-            <button>View Details</button>
-        </div>
-        <!-- More painting cards -->
-    </div>
-
-    <div class="pagination">
-        <a href="#">&#171; Previous</a>
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">Next &#187;</a>
+    <div class="painting-detail">
+        <img src="{% static painting.image %}" alt="{{ painting.title }}">
+        <h2>{{ painting.title }}</h2>
+        <p>Artist: {{ painting.artist }}</p>
+        <p class="price">${{ painting.price }}</p>
+        <p>{{ painting.short_description }}</p>
+        <p>{{ painting.description }}</p>
     </div>
 </main>
 

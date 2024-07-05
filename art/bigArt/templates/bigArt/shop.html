@@ -114,6 +114,19 @@
   .cart button:hover {
       background-color: #cc0000;
   }
+  .btn-custom {
+    background-color: goldenrod;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-custom:hover {
+    background-color: #ff5500;
+}
 </style>
 
 <main>
@@ -122,7 +135,7 @@
         <div class="search">
             <form action="" method="GET" >
               {{ product.form }}
-              <input type="submit" value="Search item " class="btn btn-primary"/>
+              <input type="submit" value="Search item " class="btn-custom"/>
             </form>         
           </div>
         <div class="product-grid">
@@ -134,7 +147,7 @@
                 {% if user_is_authenticated %}
                     <button onclick="addToCart('{{ product.product_name }}', '{{ product.price }}')">Add to Cart</button>
                 {% else %}
-                    <a href="{% url 'login' %}" class="login-required">Login to add to cart</a>
+                    <button onclick="window.location.href='{% url 'login' %}'">Login to add to cart</button>
                 {% endif %}
             </div>
             {% endfor %}
@@ -155,7 +168,7 @@
 
   function addToCart(productName, productPrice) {
       cart.push({ name: productName, price: productPrice });
-      totalPrice += productPrice;
+      totalPrice += parseFloat(productPrice);
       renderCart();
   }
 
@@ -175,227 +188,3 @@
   }
 </script>
 {% endblock %}
-{% comment %} {% extends "bigArt/base.html" %}
-{% load static %}
-
-{% block content %}
-<style>
-  body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-  }
-
-  main {
-      padding: 50px 0;
-  }
-
-  #shopping-page {
-      max-width: 1200px;
-      margin: 0 auto;
-      margin-top: 5em;
-  }
-
-  h1 {
-      text-align: center;
-      font-size: 3em;
-      margin-bottom: 1em;
-  }
-
-  .product-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-  }
-
-  .product-card {
-    background-color: #fffde7;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      margin: 10px;
-      width: calc(33% - 20px);
-      text-align: center;
-  }
-
-  .product-card img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 5px;
-  }
-
-  .product-card h2 {
-      font-size: 1.5em;
-      margin: 10px 0;
-  }
-
-  .product-card p {
-      font-size: 1.2em;
-      color: #666;
-  }
-
-  .product-card button {
-    background-color: #f4b400;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1em;
-      cursor: pointer;
-      border-radius: 5px;
-  }
-
-  .product-card button:hover {
-      background-color: #ff5500;
-  }
-
-  .cart {
-    
-      position: fixed;
-      top: 50px;
-      right: 20px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-top: 3em;
-  }
-
-  .cart h2 {
-      font-size: 1.5em;
-      margin-bottom: 20px;
-  }
-
-  .cart ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-  }
-
-  .cart li {
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-  }
-
-  .cart button {
-    background-color: #c4c111;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      font-size: 0.8em;
-      cursor: pointer;
-      border-radius: 5px;
-  }
-
-  .cart button:hover {
-    background-color: #c4a44c;
-    color: white;
-    font-size: 16px;
-  }
-</style>
-
-<main>
-    <section id="shopping-page">
-        <h1>Shop</h1>
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="{% static 'images/product1.jpg' %}" alt="Product 1">
-                <h2>Paintings</h2>
-                <p>$25.00</p>
-                {% if request.user.is_authenticated %}
-                    <button onclick="addToCart('Product 1', 25)">Add to Cart</button>
-                {% else %}
-                    <a href="{% url 'login' %}" class="login-required">Login to add to cart</a>
-                {% endif %}
-            </div>
-            <div class="product-card">
-                <img src="{% static 'images/product2.jpg' %}" alt="Product 2">
-                <h2>Sculptures</h2>
-                <p>$40.00</p>
-                {% if request.user.is_authenticated %}
-                    <button onclick="addToCart('Product 2', 40)">Add to Cart</button>
-                {% else %}
-                    <a href="{% url 'login' %}" class="login-required">Login to add to cart</a>
-                {% endif %}
-            </div>
-            <div class="product-card">
-                <img src="{% static 'images/product3.jpg' %}" alt="Product 3">
-                <h2>Ceramics</h2>
-                <p>$30.00</p>
-                {% if request.user.is_authenticated %}
-                    <button onclick="addToCart('Product 3', 30)">Add to Cart</button>
-                {% else %}
-                    <a href="{% url 'login' %}" class="login-required">Login to add to cart</a>
-                {% endif %}
-            </div>
-            <div class="product-card">
-                <img src="{% static 'images/product3.jpg' %}" alt="Product 3">
-                <h2>Textiles</h2>
-                <p>$30.00</p>
-                {% if request.user.is_authenticated %}
-                    <button onclick="addToCart('Product 3', 30)">Add to Cart</button>
-                {% else %}
-                    <a href="{% url 'login' %}" class="login-required">Login to add to cart</a>
-                {% endif %}
-            </div>
-            <div class="product-card">
-                <img src="{% static 'images/product3.jpg' %}" alt="Product 3">
-                <h2>Drawings</h2>
-                <p>$30.00</p>
-                {% if request.user.is_authenticated %}
-                    <button onclick="addToCart('Product 3', 30)">Add to Cart</button>
-                {% else %}
-                    <a href="{% url 'login' %}" class="login-required">Login to add to cart</a>
-                {% endif %}
-            </div>
-            <div class="product-card">
-                <img src="{% static 'images/product3.jpg' %}" alt="Product 3">
-                <h2>Product 6</h2>
-                <p>$30.00</p>
-                {% if request.user.is_authenticated %}
-                    <button onclick="addToCart('Product 3', 30)">Add to Cart</button>
-                {% else %}
-                    <a href="{% url 'login' %}" class="login-required">Login to add to cart</a>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-
-    <div class="cart">
-        <h2>Shopping Cart</h2>
-        <ul id="cart-items"></ul>
-        <p id="total-price">Total: $0.00</p>
-        <button><a href="{% url 'view_cart' %}" class="checkout-btn" style="text-decoration: none; color: #000;">View Cart</a></button>
-    </div>
-</main>
-
-<script>
-  let cart = [];
-  let totalPrice = 0;
-
-  function addToCart(productName, productPrice) {
-      cart.push({ name: productName, price: productPrice });
-      totalPrice += productPrice;
-      renderCart();
-  }
-
-  function removeFromCart(index) {
-      totalPrice -= cart[index].price;
-      cart.splice(index, 1);
-      renderCart();
-  }
-
-  function renderCart() {
-      const cartItems = document.getElementById('cart-items');
-      cartItems.innerHTML = '';
-      cart.forEach((item, index) => {
-          cartItems.innerHTML += `<li>${item.name} - $${item.price} <button onclick="removeFromCart(${index})">Remove</button></li>`;
-      });
-      document.getElementById('total-price').innerText = `Total: $${totalPrice.toFixed(2)}`;
-  }
-</script>
-
-
-{% endblock %} {% endcomment %}

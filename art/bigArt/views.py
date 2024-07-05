@@ -190,6 +190,24 @@ def shop(request):
     }
     return render(request, 'bigArt/shop.html', context)
 
+def paintings_list(request):
+    paintings = Painting.objects.all()
+    return render(request, 'bigArt/paintings_list.html', {'paintings': paintings})
+
+def painting_detail(request, painting_id):
+    painting = get_object_or_404(Painting, id=painting_id)
+    return render(request, 'bigArt/painting_detail.html', {'painting': painting})
+
+def add_painting(request):
+    if request.method == 'POST':
+        form = PaintingForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('painting_list')
+    else:
+        form = PaintingForm()
+    return render(request, 'add_painting.html', {'form': form})
+
 
 
 

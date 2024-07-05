@@ -83,3 +83,9 @@ class ProductForm(forms.Form):
     class Meta:
         model = Product
         fields = '__all__'
+        
+
+class PaintingForm(forms.Form):
+    class Meta:
+        model = Painting
+        fields = '__all__'       
