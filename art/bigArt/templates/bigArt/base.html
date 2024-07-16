@@ -21,6 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
+
 </head>
 <style>
 
@@ -84,7 +85,8 @@
     }
     
     nav .nav-links a:hover {
-        color: #f4b400;
+        background-color: #f4b400;
+        color: black;
     }
     
     nav .dropdown-content {
@@ -172,6 +174,55 @@
         background-color: #f4b400;
       }
 
+      .dropdown1 {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropbtn1 {
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .dropdown-content1 {
+        display: none;
+        position: absolute;
+        background-color: #f4b400;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+    
+    .dropdown1:hover .dropdown-content1 {
+        display: block;
+    }
+    
+    .dropdown-content1 a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+    
+    .dropdown-content1 a:hover {
+        background-color: #f9f9f9;
+        color: white;
+    }
+    
+    .dropdown-item1 {
+        display: flex;
+        align-items: center;
+        padding: 10px 18px;
+    }
+    
+    .dropdown-item1 img {
+        margin-right: 8px;
+    }
+    
+
 </style>
 <body>
     <nav>
@@ -181,25 +232,18 @@
         <ul class="nav-links">
             <li><a href="{% url 'index' %}">Home</a></li>      
             <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Shop
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><b style="font-size: 20px;">Shop</b>
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a tabindex="-1" href="#">Artist</a></li>
+                  <li><a tabindex="-1" href="{% url 'shop' %}">All Categories</a></li>
                  
                   <li class="dropdown-submenu">
-                    <a class="test" tabindex="-1" href="{% url 'shop' %}">All Categories<span class="caret"></span></a>
+                    <a class="test" tabindex="-1" href="#">Categories<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a tabindex="-1" href="{% url 'painting' %}">Painting</a></li>
-                      <li><a tabindex="-1" href="#">Sculpture</a></li>
-                      <li><a tabindex="-1" href="#">Drawing</a></li>
-                      <li><a tabindex="-1" href="#">Ceramics</a></li>
-                      {% comment %} <li class="dropdown-submenu">
-                        <a class="test" href="#">Another dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="#">3rd level dropdown</a></li>
-                          <li><a href="#">3rd level dropdown</a></li>
-                        </ul>
-                      </li> {% endcomment %}
+                      <li><a tabindex="-1" href="{% url 'paintings' %}">Painting</a></li>
+                      <li><a tabindex="-1" href="{% url 'sculptures' %}">Sculpture</a></li>
+                      <li><a tabindex="-1" href="{% url 'drawings' %}">Drawing</a></li>
+                      <li><a tabindex="-1" href="{% url 'ceramic' %}">Ceramics</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -209,13 +253,24 @@
             <li><a href="{% url 'about' %}">About Us</a></li>
             
             <li class="dropdown">
-                <a href="#" class="dropbtn">Account</a>
-                    <div class="dropdown-content">
-                <a href="{% url 'signup' %}">Sign Up</a>
-                <a href="{% url 'login' %}">Log In</a>
-                <a href="{% url 'logout' %}">Log Out</a>
-            </div>
-
+                
+                    <div class="dropdown1">
+                        <a href="#" class="dropbtn1">Account</a>
+                        <div class="dropdown-content1">
+                            <div class="dropdown-item1">
+                                <img src="{% static 'images/su.png' %}" alt="Sign Up" height="25" width="30">
+                                <a href="{% url 'signup' %}">Sign Up</a>
+                            </div>
+                            <div class="dropdown-item1">
+                                <img src="{% static 'images/li.png' %}" alt="Log In" height="25" width="30">
+                                <a href="{% url 'login' %}">Log In</a>
+                            </div>
+                            <div class="dropdown-item1">
+                                <img src="{% static 'images/lo.png' %}" alt="Log Out" height="25" width="30">
+                                <a href="{% url 'logout' %}">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
         </ul>
     </nav>
 
@@ -234,7 +289,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    
+  
+
+  
     
     
 
@@ -255,7 +312,7 @@
                     <h3>Contact Information</h3>
                     <div class="contact-info">
                         <p><i class="fas fa-phone"></i> Phone: +256 783469822 <br>+256 </p>
-                        <p><i class="fas fa-envelope"></i> Email: bigartug@gmail.com</p>
+                        <p><i class="fas fa-envelope"></i> Email: bigartug24@gmail.com</p>
                         <p><i class="fas fa-map-marker-alt"></i> Location: Aboke Twon Council, Kole, Uganda</p>
                     </div>
                 </div>
@@ -288,4 +345,3 @@
     
 </body>
 </html>
-

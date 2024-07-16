@@ -2,9 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-
-# Create your models here.
-
+from django.core.validators import MaxValueValidator
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class CustomUserManager(BaseUserManager):
@@ -42,7 +40,7 @@ class CustomUser(AbstractBaseUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return self.first_name
     
 
 class Contact(models.Model):
@@ -64,20 +62,46 @@ class Category(models.Model):
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+    artist = models.CharField(max_length=200, default='Amuku Godwin')
+    quantity = models.IntegerField(null=True, blank=True)
     description = models.TextField()
     image = models.ImageField(upload_to='products/')
 
     def __str__(self):
         return self.product_name
 
-class CartItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
+    def remaining_quantity(self, cart_quantity):
+        return self.quantity - cart_quantity
+    
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    user_name = models.CharField(max_length=100)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.product.name} ({self.quantity})"
+        return f'Review by {self.user_name} on {self.product.product_name}'    
+    
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def save(self, *args, **kwargs):
+        # Calculate total_price based on unit_price and quantity
+        self.total_price = self.unit_price * self.quantity
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.product.name} in cart {self.cart.id}"
+
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -88,16 +112,3 @@ class Order(models.Model):
     def __str__(self):
         return f"Order {self.id} by {self.user.username}"
     
-
-    
-class Painting(models.Model):
-    title = models.CharField(max_length=200)
-    artist = models.CharField(max_length=200)
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=100.00)
-    short_description = models.TextField(default="No description available")
-    description = models.TextField()
-    image = models.ImageField(upload_to='paintings/')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.title    

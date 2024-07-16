@@ -134,34 +134,24 @@
         <table>
             <thead>
                 <tr>
+                    <th>Customer's Name</th>
                     <th>Product</th>
-                    <th>Price</th>
+                    <th>Unit Price</th>
                     <th>Quantity</th>
                     <th>Subtotal</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                {% for item in cart_items %}
+                {% for cart_item in cart_items %}
                 <tr>
+                    <td>{{ cart_item.customer.name }}</td>
+                    <td>{{ cart_item.product.name }}</td>
+                    <td>${{ cart_item.product.unit_price }}</td>
+                    <td>{{ cart_item.quantity }}</td>
+                    <td>${{ cart_item.total_price }}</td>
                     <td>
-                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                        {{ item.product.name }}
-                    </td>
-                    <td>${{ item.product.price }}</td>
-                    <td class="quantity">
-                        <form action="{% url 'update_cart' item.id %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                            <button type="submit" class="update-btn">Update</button>
-                        </form>
-                    </td>
-                    {% comment %} <td>${{ item.product.price|multiply:item.quantity }}</td> {% endcomment %}
-                    <td>
-                        <form action="{% url 'remove_from_cart' item.id %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="remove-btn">Remove</button>
-                        </form>
+                        <a href="{% url 'remove_from_cart' cart_item.product.id %}">Remove</a>
                     </td>
                 </tr>
                 {% endfor %}

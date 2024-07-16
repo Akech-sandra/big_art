@@ -1,9 +1,0 @@
-{% extends "bigArt/base.html" %}
-{% load static %}
-{% block content %}
-    <h1>{{ painting.title }}</h1>
-    <img src="{{ painting.image.url }}" alt="{{ painting.title }}">
-    <p>Artist: {{ painting.artist }}</p>
-    <p>Price: ${{ painting.price }}</p>
-    <p>{{ painting.description }}</p>
-{% endblock %}

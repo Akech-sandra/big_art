@@ -1,0 +1,224 @@
+{% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    main {
+        margin-top: 10em;
+    }
+    
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+    }
+    
+    header .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    
+    header nav ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header nav ul li {
+        margin: 0 10px;
+    }
+    
+    header nav ul li a {
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    .hero {
+        background: url('{% static "hero-image.jpg" %}') no-repeat center center/cover;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        text-align: center;
+        font-size: 36px;
+    }
+    
+          
+    .filter-search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+    }
+    
+    .filter-search .search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .filter-search form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .filter-search input[type="text"],
+    .filter-search input[type="submit"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+    
+    .filter-search input[type="text"]:focus,
+    .filter-search input[type="submit"]:hover {
+        border-color: #fb8500;
+    }
+    
+    .filter-search input[type="submit"] {
+        background-color: #f4b400;
+        color: #fff;
+        cursor: pointer;
+    }
+    
+    .filter-search input[type="submit"]:hover {
+        background-color: #fb8500;
+    }
+    
+    .search-input {
+        flex-grow: 1;
+    }
+    
+    
+    .ceramics-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 20px;
+    }
+    
+    .seramic-card {
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 30%;
+        margin: 20px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    
+    .seramic-card img {
+        max-width: 100%;
+        border-radius: 5px;
+    }
+    
+    .seramic-card h2 {
+        font-size: 24px;
+        margin: 10px 0;
+    }
+    
+    .seramic-card p {
+        margin: 10px 0;
+    }
+    
+    .seramic-card button {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+    
+    .pagination a {
+        margin: 0 5px;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .seramic-card .btn-custom {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Remove default link underline */
+        display: inline-block; /* Ensure it behaves like a button */
+        transition: background-color 0.3s ease;
+    }
+
+    .seramic-card .btn-custom:hover {
+        background-color: #555; /* Darken background on hover */
+    }
+</style>
+
+<main>
+    <div class="filter-search">
+        <form method="get">
+            {{ seramic_filter.form.as_p }}
+            <input type="submit" value="Search item" class="btn btn-primary"/>
+        </form>
+    </div>
+    <div class="ceramics-grid">
+        {% for ceramic in seramic %}
+        <div class="seramic-card">
+            {% if ceramic.image %}
+            <img src="{{ ceramic.image.url }}" alt="{{ ceramic.name }}">
+            {% endif %}
+            <h2>{{ ceramic.product_name }}</h2>
+            <p>Artist: {{ ceramic.artist }}</p>
+            <p>UGX {{ ceramic.unit_price }}</p>
+            <p>{{ ceramic.description|truncatewords_html:20 }}</p>
+            <a href="{% url 'product_detail' ceramic.id %}" class="btn btn-custom">View Details</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <a href="#">&#171; Previous</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">Next &#187;</a>
+    </div>
+</main>
+
+{% endblock %}
+
+
+
+
+
+ 
+
+
+
+

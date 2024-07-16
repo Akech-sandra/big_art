@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 
 # Quick-start development settings - unsuitable for production
@@ -39,7 +44,34 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "bigArt",
     "django_filters",
+    "crispy_forms",
+    "crispy_bootstrap4",
+    "django.contrib.sites",
+    #Django Authentication
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    # 'allauth.socialaccount.providers.google',
 ]
+
+AUTHENTICATION_BACKENDS =[
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+#Email backend configuration for password reset functionality   
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST ='smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'akesandra659@gmail.com'
+EMAIL_HOST_PASSWORD = 'ruhg yary dyng zyid'
+
+
+# In your Django settings.py
+DOMAIN = 'sandra.com'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -49,6 +81,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "art.urls"
@@ -56,7 +89,7 @@ ROOT_URLCONF = "art.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -121,6 +154,9 @@ STATIC_URL = "static/"
 
 MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
 
 
 # Default primary key field type
@@ -131,3 +167,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = '/login/'  # or the URL pattern for your login view
 LOGIN_REDIRECT_URL = '/shop/'  # or wherever you want to redirect after login
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

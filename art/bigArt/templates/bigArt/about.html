@@ -549,12 +549,12 @@ button#myBtn:hover {
         <div class="media">
             <img src="{% static 'images/54.jpg' %}" alt="Team Working">
             <video controls>
-                <source src="{% static 'videos/team_video.mp4' %}" type="video/mp4">
+                <source src="{% static 'videos/work.mp4' %}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
         <h2>Contact Us</h2>
-        <p>Have questions or need support? Reach out to us at <a href="mailto:support@artcraft.com">bigartug@gmail.com</a>. Or</p>
+        <p>Have questions or need support? Reach out to us at <a href="mailto:support@artcraft.com">bigartug24@gmail.com</a>. Or</p>
         {% for message in messages %}
 <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 5em; margin-bottom: 1em;">
     {{ message }}
@@ -566,7 +566,7 @@ button#myBtn:hover {
 <div class="signup-container" style="margin-top: 2rem;">
     <div class="signup-form">
         <h2>Contact Us Here</h2>
-        <form method="POST" action="https://formspree.io/f/mayrrkvk" style="width: 100%;">
+        <form method="POST" action="https://formspree.io/f/mnnandza" style="width: 100%;">
             {% csrf_token %}
             <div class="row g-3">
                 <div class="col-md-6">
@@ -595,7 +595,7 @@ button#myBtn:hover {
                 </div>
             </div>
             <div class="form-group form-group-center" style="padding-left: 210px; padding-right: 210px;">
-                <button type="submit">Submit</button>
+                <button type="submit">Contact</button>
             </div>
             {% if error_message %}
             <div class="alert alert-danger" role="alert" style="margin-top: 15px;">
@@ -616,35 +616,34 @@ button#myBtn:hover {
 <!-- Include Slick Carousel -->
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <!-- Initialize Slick Carousel -->
-{% comment %} <script type="text/javascript">
-    $(document).ready(function(){
-        $('.carousel').slick({
-            autoplay: true,
-            autoplaySpeed: 2000,
-            dots: true,
-            arrows: false,
-        });
+<script>
+    let slideIndex = 0;
+    const slides = document.getElementsByClassName("content1");
+
+    function showSlides() {
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}    
+        slides[slideIndex-1].style.display = "block";  
+        setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+
+    document.getElementById("prevBtn").addEventListener("click", () => {
+        slideIndex--;
+        if (slideIndex < 1) {slideIndex = slides.length}
+        showSlides(slideIndex);
     });
 
+    document.getElementById("nextBtn").addEventListener("click", () => {
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        showSlides(slideIndex);
+    });
 
-    function myFunction() {
-        var dots = document.getElementById("dots");
-        var moreText = document.getElementById("more");
-        var btnText = document.getElementById("myBtn");
-      
-        if (dots.style.display === "none") {
-          dots.style.display = "inline";
-          btnText.innerHTML = "Read more";
-          moreText.style.display = "none";
-        } else {
-          dots.style.display = "none";
-          btnText.innerHTML = "Read less";
-          moreText.style.display = "inline";
-        }
-      }
-
-</script> {% endcomment %}
-
+    showSlides();
+</script>
 
 
 

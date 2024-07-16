@@ -16,33 +16,55 @@
                     aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
                     aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                    aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"
+                    aria-label="Slide 5"></button>
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="{% static 'images/9.jpg' %}" class="d-block w-100" alt="Slide 1">
                     <div class="carousel-caption d-none d-md-block">
-                        <h2>Meet Our Featured Artist: Jane Doe</h2>
-                        <p>Discover the stunning abstract paintings by Jane Doe, now available exclusively on BigArtUg.
-                            Explore her unique style and add a piece to your collection.</p>
-                        <a href="#" class="btn btn-primary">Shop Jane's Collection</a>
+                        <h2>Meet Our Featured Artist: Amuku Godwin</h2>
+                        <p>Discover the stunning abstract paintings by Amuku Godwin, now available exclusively on BigArtUg.
+                            Explore his unique style and add a piece to your collection.</p>
+                        <a href="{% url 'shop' %}" class="btn btn-primary">Shop Godwin's Collection</a>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="{% static 'images/14.jpg' %}" class="d-block w-100" alt="Slide 2">
                     <div class="carousel-caption d-none d-md-block">
-                        <h2>Sculptures by John Smith</h2>
-                        <p>Experience the intricate details of John Smith's sculptures. Each piece is handcrafted with
+                        <h2>Sculptures by Amuku Godwin</h2>
+                        <p>Experience the intricate details of Amuku Godwin's sculptures. Each piece is handcrafted with
                             precision and passion. Shop now and bring art into your home.</p>
-                        <a href="#" class="btn btn-primary">View Sculptures</a>
+                        <a href="{% url 'sculptures' %}" class="btn btn-primary">View Sculptures</a>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="{% static 'images/17.jpg' %}" class="d-block w-100" alt="Slide 3">
+                    <img src="{% static 'images/4.jpg' %}" class="d-block w-100" alt="Slide 3">
                     <div class="carousel-caption d-none d-md-block">
-                        <h2>Handmade Ceramics by Mary Lee</h2>
-                        <p>Enhance your space with Mary Lee's exquisite ceramic creations. From vases to dinnerware, find
+                        <h2>Original Paintings by the Talented Artist</h2>
+                        <p>Discover a world of creativity with our collection of original paintings by Amuku Godwin. From abstract
+                            expressions to realistic landscapes, find artworks that resonate with your style.</p>
+                        <a href="{% url 'paintings' %}" class="btn btn-primary">Explore Paintings</a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/42.jpg' %}" class="d-block w-100" alt="Slide 4">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2>Original Drawings by an Emerging Artist</h2>
+                        <p>Explore a collection of original drawings by Amuku Godwin. From intricate sketches to expressive illustrations,
+                            find artworks that captivate your imagination.</p>
+                        <a href="{% url 'drawings' %}" class="btn btn-primary">Explore Drawings</a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'images/17.jpg' %}" class="d-block w-100" alt="Slide 5">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2>Handmade Ceramics by Amuku Godwin</h2>
+                        <p>Enhance your space with Amuku Godwin's exquisite ceramic creations. From vases to dinnerware, find
                             the perfect piece for your home.</p>
-                        <a href="#" class="btn btn-primary">Explore Ceramics</a>
+                        <a href="{% url 'ceramic' %}" class="btn btn-primary">Explore Ceramics</a>
                     </div>
                 </div>
             </div>
@@ -58,7 +80,5 @@
             </button>
         </div>
     </section>
-
 </body>
-
 {% endblock %}

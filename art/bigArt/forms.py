@@ -84,8 +84,12 @@ class ProductForm(forms.Form):
         model = Product
         fields = '__all__'
         
-
-class PaintingForm(forms.Form):
+        
+class ReviewForm(forms.ModelForm):
     class Meta:
-        model = Painting
-        fields = '__all__'       
+        model = Review
+        fields = ['comment']  # Only include the fields you want to be filled out by the user
+        widgets = {
+            'comment': forms.Textarea(attrs={'placeholder': 'Write your review...', 'rows': 4}),
+            # 'comment_time':forms.DateTimeInput(attrs={'type':'datetime-local'}),
+        }                         

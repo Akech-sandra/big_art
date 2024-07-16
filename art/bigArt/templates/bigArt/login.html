@@ -42,6 +42,9 @@
             <div class="form-group">
                 <button type="submit" style="padding-left: 100px; padding-right: 100px; padding: 5px;">Log In</button>
             </div>
+            <div class="form-group" style="margin-top: 10px;">
+                <a href="{% url 'password_reset' %}" class="btn btn-link">Forgotten your Password?</a>
+            </div>
             {% if error_message %}
             <div class="alert alert-danger" role="alert" style="margin-top: 15px;">
                 {{ error_message }}

@@ -1,0 +1,247 @@
+{% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    main {
+        margin-top: 6em;
+    }
+
+      
+         
+    .filter-search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+    }
+    
+    .filter-search .search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .filter-search form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .filter-search input[type="text"],
+    .filter-search input[type="submit"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+    
+    .filter-search input[type="text"]:focus,
+    .filter-search input[type="submit"]:hover {
+        border-color: #fb8500;
+    }
+    
+    .filter-search input[type="submit"] {
+        background-color: #f4b400;
+        color: #fff;
+        cursor: pointer;
+    }
+    
+    .filter-search input[type="submit"]:hover {
+        background-color: #fb8500;
+    }
+    
+    .search-input {
+        flex-grow: 1;
+    }
+    
+
+    .drawings-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 20px;
+    }
+
+    .drawing-card {
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 30%;
+        margin: 20px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .drawing-card img {
+        max-width: 100%;
+        border-radius: 5px;
+    }
+
+    .drawing-card h2 {
+        font-size: 24px;
+        margin: 10px 0;
+    }
+
+    .drawing-card p {
+        margin: 10px 0;
+    }
+
+    .drawing-card button {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .drawing-card .btn-custom {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Remove default link underline */
+        display: inline-block; /* Ensure it behaves like a button */
+        transition: background-color 0.3s ease;
+    }
+
+    .drawing-card .btn-custom:hover {
+        background-color: #555; /* Darken background on hover */
+    }
+</style>
+
+<main>
+    <div class="filter-search">
+            <form method="get">
+                {{ drawing_filter.form.as_p }}
+                <input type="submit" value="Search" class="btn btn-primary"/>
+            </form>
+        
+    </div>
+    <div class="drawings-grid">
+        {% for drawing in drawings %}
+        <div class="drawing-card">
+            {% if drawing.image %}
+            <img src="{{ drawing.image.url }}" alt="{{ drawing.title }}">
+            {% endif %}
+            <h2>{{ drawing.product_name}}</h2>
+            <p>Artist: {{ drawing.artist }}</p>
+            <p>UGX {{ drawing.unit_price }}</p>
+            <p>{{ drawing.description|truncatewords_html:20 }}</p>
+            <a href="{% url 'product_detail' drawing.id %}" class="btn btn-custom">View Details</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <a href="#">&#171; Previous</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">Next &#187;</a>
+    </div>
+</main>
+
+{% endblock %}
+
+
+
+
+
+{% comment %} {% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    main {
+        margin-top: 6em;
+    }
+
+    .painting-detail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .painting-detail img {
+        max-width: 50%;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .painting-detail h2 {
+        font-size: 36px;
+        margin: 10px 0;
+    }
+
+    .painting-detail p {
+        margin: 10px 0;
+        font-size: 18px;
+    }
+
+    .painting-detail .price {
+        font-size: 24px;
+        color: #333;
+        margin: 10px 0;
+    }
+</style>
+
+
+
+
+<div class="container mt-5">
+    <h2 class="mb-4">Drawings Gallery</h2>
+    <div class="row">
+        {% for drawing in drawings %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ drawing.image.url }}" class="card-img-top" alt="{{ drawing.product_name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ drawing.product_name }}</h5>
+                    <p class="card-text"><strong>Artist:</strong> {{ drawing.artist }}</p>
+                    <p class="card-text">{{ drawing.description|truncatewords:20 }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+ {% endcomment %}

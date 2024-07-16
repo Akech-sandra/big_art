@@ -9,29 +9,24 @@
       padding: 0;
       background-color: #f5f5f5;
   }
-
   main {
       padding: 50px 0;
   }
-
   #shopping-page {
       max-width: 1200px;
       margin: 0 auto;
       margin-top: 5em;
   }
-
   h1 {
       text-align: center;
       font-size: 3em;
       margin-bottom: 1em;
   }
-
   .product-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
   }
-
   .product-card {
       background-color: #fff;
       border-radius: 5px;
@@ -41,23 +36,19 @@
       width: calc(33% - 20px);
       text-align: center;
   }
-
   .product-card img {
       max-width: 100%;
       height: auto;
       border-radius: 5px;
   }
-
   .product-card h2 {
       font-size: 1.5em;
       margin: 10px 0;
   }
-
   .product-card p {
       font-size: 1.2em;
       color: #666;
   }
-
   .product-card button {
       background-color: #ff6600;
       color: #fff;
@@ -67,11 +58,9 @@
       cursor: pointer;
       border-radius: 5px;
   }
-
   .product-card button:hover {
       background-color: #ff5500;
   }
-
   .cart {
       position: fixed;
       top: 50px;
@@ -83,26 +72,22 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       margin-top: 3em;
   }
-
   .cart h2 {
       font-size: 1.5em;
       margin-bottom: 20px;
   }
-
   .cart ul {
       list-style: none;
       padding: 0;
       margin: 0;
   }
-
   .cart li {
       margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
   }
-
   .cart button {
-      background-color: #ff0000;
+      background-color: #fb8500;
       color: #fff;
       border: none;
       padding: 5px 10px;
@@ -110,9 +95,8 @@
       cursor: pointer;
       border-radius: 5px;
   }
-
   .cart button:hover {
-      background-color: #cc0000;
+      background-color: #f35b04;
   }
   .btn-custom {
     background-color: goldenrod;
@@ -122,32 +106,95 @@
     font-size: 1em;
     cursor: pointer;
     border-radius: 5px;
-}
-
-.btn-custom:hover {
-    background-color: #ff5500;
-}
+  }
+  .btn-custom:hover {
+      background-color: #ff5500;
+  }
+  .filter-search {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+  }
+  .filter-search .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+  }
+  .filter-search form {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+  }
+  .filter-search input[type="text"],
+  .filter-search input[type="submit"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      transition: all 0.3s ease;
+  }
+  .filter-search input[type="text"]:focus,
+  .filter-search input[type="submit"]:hover {
+      border-color: #fb8500;
+  }
+  .filter-search input[type="submit"] {
+      background-color: #f4b400;
+      color: #fff;
+      cursor: pointer;
+  }
+  .filter-search input[type="submit"]:hover {
+      background-color: #fb8500;
+  }
+  .search-input {
+      flex-grow: 1;
+  }
 </style>
 
 <main>
     <section id="shopping-page">
         <h1>Shop</h1>
-        <div class="search">
-            <form action="" method="GET" >
-              {{ product.form }}
-              <input type="submit" value="Search item " class="btn-custom"/>
-            </form>         
-          </div>
+        <div class="filter-search">
+            <div class="search">
+                <form action="" method="GET">
+                    {{ product.form }}
+                    <input type="submit" value="Search" class="btn btn-primary"/>
+                </form>
+            </div>
+        </div>
+        <div class="category-list">
+            {% for category in categories %}
+                <div class="category-item">
+                    <a href="?category={{ category.id }}">{{ category }}</a>
+                    <!-- <span class="badge badge-secondary">{{ category.products.count }}</span> -->
+                </div>
+            {% endfor %}
+        </div>
         <div class="product-grid">
             {% for product in products %}
             <div class="product-card">
-                <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
-                <h2>{{ product.product_name }}</h2>
-                <p>${{ product.price }}</p>
-                {% if user_is_authenticated %}
-                    <button onclick="addToCart('{{ product.product_name }}', '{{ product.price }}')">Add to Cart</button>
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
+                {% endif %}
+                <h2>Name: {{ product.product_name }}</h2>
+                <p>UGX {{ product.unit_price }}</p>
+                <p>Artist: {{ product.artist }}</p>
+                {% comment %} <p>Description: {{ product.description }}</p> {% endcomment %}
+                <p>Available: {{ product.quantity }}</p>
+                <a href="{% url 'product_detail' product.id %}" class="btn btn-custom">View Details</a>
+                {% if product.quantity > 0 %}
+                    {% if user.is_authenticated %}
+                        <button onclick="addToCart('{{ product.id }}', '{{ product.product_name }}', '{{ product.unit_price }}', {{ product.quantity }})" class="btn btn-custom">Add to Cart</button>
+                    {% else %}
+                        <button onclick="window.location.href='{% url 'login' %}'" class="btn btn-custom">Login to add to cart</button>
+                    {% endif %}
                 {% else %}
-                    <button onclick="window.location.href='{% url 'login' %}'">Login to add to cart</button>
+                    <button disabled class="btn btn-custom">Out of Stock</button>
                 {% endif %}
             </div>
             {% endfor %}
@@ -157,24 +204,107 @@
     <div class="cart">
         <h2>Shopping Cart</h2>
         <ul id="cart-items"></ul>
-        <p id="total-price">Total: $0.00</p>
-        <button><a href="{% url 'view_cart' %}" class="checkout-btn" style="text-decoration: none; color: #000;">View Cart</a></button>
+        <p id="total-price">Total: UGX0.00</p>
+        <button><a href="{% url 'checkout' %}">Checkout</a></button>
     </div>
 </main>
 
 <script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function addToCart(productId, productName, productPrice, productQuantity) {
+    const csrftoken = getCookie('csrftoken');
+    fetch(`{% url 'add_to_cart' 0 %}`.replace(0, productId), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            product_id: productId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+            renderCart();
+        } else {
+            alert(data.message);
+        }
+    });
+}
+
+function renderCart() {
+    fetch("{% url 'view_cart' %}")
+        .then(response => response.json())
+        .then(data => {
+            const cartItems = data.cart;
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+            let totalPrice = 0;
+            cartItems.forEach(item => {
+                const cartItem = document.createElement('li');
+                cartItem.textContent = `${item.product.product_name} - UGX${item.product.unit_price} x ${item.quantity}`;
+                cartItemsContainer.appendChild(cartItem);
+                totalPrice += item.product.unit_price * item.quantity;
+            });
+            document.getElementById('total-price').textContent = `Total: UGX${totalPrice.toFixed(2)}`;
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    renderCart();
+});
+</script>
+{% endblock %}
+
+
+
+{% comment %} <script>
   let cart = [];
   let totalPrice = 0;
 
-  function addToCart(productName, productPrice) {
-      cart.push({ name: productName, price: productPrice });
-      totalPrice += parseFloat(productPrice);
+  function addToCart(productId, productName, productPrice, productQuantity) {
+      const productIndex = cart.findIndex(item => item.id === productId);
+      if (productIndex !== -1) {
+          if (cart[productIndex].quantity < productQuantity) {
+              cart[productIndex].quantity += 1;
+              totalPrice += parseFloat(productPrice);
+          } else {
+              alert('Sorry, this product is out of stock!');
+          }
+      } else {
+          cart.push({ id: productId, name: productName, price: parseFloat(productPrice), quantity: 1, maxQuantity: productQuantity });
+          totalPrice += parseFloat(productPrice);
+      }
       renderCart();
   }
 
-  function removeFromCart(index) {
-      totalPrice -= cart[index].price;
-      cart.splice(index, 1);
+  function removeFromCart(productId) {
+      const productIndex = cart.findIndex(item => item.id === productId);
+      if (productIndex !== -1) {
+          const product = cart[productIndex];
+          totalPrice -= product.price;
+          if (product.quantity > 1) {
+              product.quantity -= 1;
+          } else {
+              cart.splice(productIndex, 1);
+          }
+      }
       renderCart();
   }
 
@@ -182,9 +312,8 @@
       const cartItems = document.getElementById('cart-items');
       cartItems.innerHTML = '';
       cart.forEach((item, index) => {
-          cartItems.innerHTML += `<li>${item.name} - $${item.price} <button onclick="removeFromCart(${index})">Remove</button></li>`;
+          cartItems.innerHTML += <li>${item.name} - $${item.price.toFixed(2)} x ${item.quantity} <button onclick="removeFromCart(${item.id})">Remove</button></li>;
       });
-      document.getElementById('total-price').innerText = `Total: $${totalPrice.toFixed(2)}`;
+      document.getElementById('total-price').innerText = Total: $${totalPrice.toFixed(2)};
   }
-</script>
-{% endblock %}
+</script> {% endcomment %}
