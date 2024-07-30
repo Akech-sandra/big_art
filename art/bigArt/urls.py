@@ -30,6 +30,8 @@ urlpatterns = [
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
     path('product/<int:product_id>/add_review/', views.add_review, name='add_review'),
     
+   path('checkout/', views.checkout, name='checkout'),
+    
     # reset password(urls)
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='Accounts/password_reset_form.html'), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='Accounts/password_reset_done.html'), name='password_reset_done'),

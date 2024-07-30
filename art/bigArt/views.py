@@ -193,7 +193,7 @@ def order_confirmation(request):
     return render(request, 'bigArt/order_summary.html', {'order_details': order_details, 'cart': cart, 'total_price': total_price})
 
 
-@login_required
+# @login_required
 def checkout(request):
     cart_items = CartItem.objects.filter(user=request.user)
     if request.method == 'POST':
@@ -207,7 +207,7 @@ def checkout(request):
     total_price = sum(item.product.price * item.quantity for item in cart_items)
     return render(request, 'bigArt/checkout.html', {'cart_items': cart_items, 'total_price': total_price, 'form': form})
 
-@login_required
+# @login_required
 def order_confirmation(request):
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'bigArt/order_confirmation.html', {'orders': orders})

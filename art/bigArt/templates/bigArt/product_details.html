@@ -191,6 +191,7 @@
         <p>Available: {{ product.quantity }}</p>
         {% if product.quantity > 0 %}
             {% if user.is_authenticated %}
+            {% comment %} <button onclick="addToCart('{{ product.product_name }}', '{{ product.unit_price }}')">Add to Cart</button> {% endcomment %}
                 <button onclick="addToCart('{{ product.id }}', '{{ product.product_name }}', '{{ product.unit_price }}', {{ product.quantity }})" class="btn-custom">Add to Cart</button>
             {% else %}
                 <button onclick="window.location.href='{% url 'login' %}'" class="btn-custom">Login to add to cart</button>

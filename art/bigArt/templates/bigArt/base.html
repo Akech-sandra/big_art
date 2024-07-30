@@ -19,18 +19,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-
+    <!-- Bootstrap CSS -->
+    {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> {% endcomment %}
 </head>
 <style>
-
-      body {
+    body {
         font-family: Arial, sans-serif;
+        font-size: 16px; /* Adjusted the global font size */
         margin: 0;
         padding: 0;
         box-sizing: border-box;
         background-color: #f3f1da;
+        
     }
     
     nav {
@@ -75,7 +81,7 @@
     nav .nav-links a {
         color: white;
         text-decoration: none;
-        font-size: 18px;
+        font-size: 18px; /* Adjusted font size */
         font-weight: bold;
         margin-bottom: 0px;
         padding-bottom: 5px;
@@ -162,19 +168,19 @@
     
     .dropdown-submenu {
         position: relative;
-      }
+    }
       
-      .dropdown-submenu .dropdown-menu {
+    .dropdown-submenu .dropdown-menu {
         top: 0;
         left: 100%;
         margin-top: -1px;
-      }
+    }
 
-      .dropdown-menu {
+    .dropdown-menu {
         background-color: #f4b400;
-      }
+    }
 
-      .dropdown1 {
+    .dropdown1 {
         position: relative;
         display: inline-block;
     }
@@ -221,8 +227,6 @@
     .dropdown-item1 img {
         margin-right: 8px;
     }
-    
-
 </style>
 <body>
     <nav>
@@ -232,7 +236,7 @@
         <ul class="nav-links">
             <li><a href="{% url 'index' %}">Home</a></li>      
             <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><b style="font-size: 20px;">Shop</b>
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><b style="font-size: 25px; font-weight: bold; background-color: #f4b400; padding: 8px; border-radius: 5px;">Shop</b>
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li><a tabindex="-1" href="{% url 'shop' %}">All Categories</a></li>
@@ -300,30 +304,25 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h3>Social Media Handles</h3>
-                    <div class="social-media">
-                        <a href="#" class="social-icon"><i class="fab fa-facebook-f">Facebook</i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-instagram">Instagram</i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-twitter">Twitter</i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-whatsapp">Whatsapp</i></a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <h3>Contact Information</h3>
+                    <h3>Contact Us</h3>
                     <div class="contact-info">
-                        <p><i class="fas fa-phone"></i> Phone: +256 783469822 <br>+256 </p>
+                        <p><i class="fas fa-phone"></i> Phone: +256 783469822<br>+256 757270046</p>
                         <p><i class="fas fa-envelope"></i> Email: bigartug24@gmail.com</p>
-                        <p><i class="fas fa-map-marker-alt"></i> Location: Aboke Twon Council, Kole, Uganda</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Location: Aboke Town Council, Kole, Uganda</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <h3>GPS Map</h3>
-                    <div class="gps-map">
-                            <div class="col-md-6">
-                                <div class="card11">
-                                  <iframe src="https://www.google.com/maps/place/Aboke+Town+Council,+17+Kamdini+-+Lira,+Lira/@2.2459072,32.3114091,14z/data=!3m1!4b1!4m6!3m5!1s0x177062f56aaaaaab:0x2d544b1d33f579d8!8m2!3d2.2458645!4d32.3320088!16s%2Fg%2F11vxm4760r?authuser=0&entry=ttu" width="250" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                                </div>
+                    <h3>Social Media</h3>
+                    <div class="social-media">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i> Twitter</a>
+                        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i> Whatsapp</a>
                     </div>
+                </div>
+                <div class="col-md-4">
+                    <h3>About Us</h3>
+                    <p>BigArtUg promotes and preserves Uganda's cultural heritage through artistic expression. We showcase local artists' creativity in painting, sculpture, and ceramics, fostering a vibrant art community. Our mission is to celebrate diversity and inspire creativity in every piece we exhibit.</p>
                 </div>
             </div>
         </div>
@@ -331,6 +330,8 @@
             <p>&copy; 2024 BigArtUg. All Rights Reserved.</p>
         </div>
     </footer>
+    
+      
 
    
 <script>
