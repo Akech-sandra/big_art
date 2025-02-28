@@ -4,8 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.contrib.auth.models import User
-
+from django.utils import timezone
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         # Create and save a user with the given email and password.
@@ -66,6 +65,7 @@ class Product(models.Model):
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
     artist = models.CharField(max_length=200, default='Amuku Godwin')
     quantity = models.IntegerField(null=True, blank=True)
+    short_description = models.TextField(blank=True, null=True)
     description = models.TextField()
     image = models.ImageField(upload_to='products/')
 
@@ -88,23 +88,48 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     
-def get_default_user():
-    return User.objects.get(pk=1)  # Assuming user with ID 1 exists
+
 
 class CartItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=get_default_user)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)   
+    quantity = models.PositiveIntegerField(default=1)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def save(self, *args, **kwargs):
+        # Calculate total_price based on unit_price and quantity
+        self.total_price = self.unit_price * self.quantity
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.product.product_name } in cart {self.cart.id}"
 
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
-    created_at = models.DateTimeField(auto_now_add=True)
+    shipping_address = models.CharField(max_length=255,null= True, blank=True   )
+    payment_method = models.CharField(max_length=50,null=True, blank=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    date_ordered = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, default='Pending')
+    quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return f"Order {self.id} by {self.user.username}"
-    
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+class PageView(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    session_key = models.CharField(max_length=40, null=True, blank=True)
+    view_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"View by {self.user if self.user else 'Anonymous'} on {self.view_date}"

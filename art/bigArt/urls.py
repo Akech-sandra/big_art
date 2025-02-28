@@ -22,15 +22,14 @@ urlpatterns = [
     path('cart/', views.cart_detail, name='cart_detail'),
     
     path('checkout/', views.checkout, name='checkout'),
-    path('order_confirmation/', views.order_confirmation, name='order_confirmation'),
-  
+    path('order_confirmation/<int:order_id>/', views.order_confirmation, name='order_confirmation'),
+    path('cancel-order/', views.cancel_order, name='cancel_order'),
     path('remove-from-cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
+    
     path('add-to-cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
 
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
     path('product/<int:product_id>/add_review/', views.add_review, name='add_review'),
-    
-   path('checkout/', views.checkout, name='checkout'),
     
     # reset password(urls)
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='Accounts/password_reset_form.html'), name='password_reset'),

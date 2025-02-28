@@ -1,4 +1,129 @@
+<!-- bigArt/checkout.html -->
+
 {% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .background-image {
+        background-image: url('{% static 'images/20.jpg' %}');
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        z-index: -1;
+    }
+    .checkout-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .checkout-page {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #fff;
+    }
+    .checkout-page h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .checkout-page form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .checkout-page form .form-group {
+        margin-bottom: 15px;
+    }
+    .checkout-page form label {
+        font-size: 1em;
+        margin-bottom: 5px;
+        display: block;
+    }
+    .checkout-page form input, .checkout-page form select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+    }
+    .checkout-page form .order-summary {
+        margin: 20px 0;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+    .checkout-page form .order-summary p {
+        margin: 0;
+    }
+    .checkout-page form button {
+        background-color: #f4b400;
+        color: #ffffff;
+        padding: 0.75em 1.5em;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 1em 0;
+    }
+    .checkout-page form button:hover {
+        background-color: #ffa500;
+    }
+</style>
+<div class="background-image"></div>
+<div class="checkout-container" style="margin-top: 5em;">
+    <section class="checkout-page">
+        <h1>Checkout</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="shipping-address">Shipping Address</label>
+                <input type="text" id="shipping-address" name="shipping_address" placeholder="123 Main St, City, Country" required style="color: #000;">
+            </div>
+            <div class="form-group">
+                <label for="payment-method">Payment Method</label>
+                <select id="payment-method" name="payment_method" required style="color: #000;">
+                    {% comment %} <option value="">Select a payment method</option> {% endcomment %}
+                    <option value="credit_card">Cash</option>
+                    <option value="paypal">Mobile Money</option>
+                    <option value="bank_transfer">Credit Card</option>
+                </select>
+            </div>
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                {% for item in cart_items %}
+                <p>{{ item.product.product_name }} - ${{ item.product.unit_price }} x {{ item.quantity }}</p>
+                {% endfor %}
+                <p><strong>Total: ${{ total_price }}</strong></p>
+            </div>
+            <button type="submit">Confirm Order</button>
+        </form>
+        <form method="post" action="{% url 'cancel_order' %}">
+            {% csrf_token %}
+            <button type="submit">Cancel Order</button>
+        </form>
+    </section>
+</div>
+{% endblock %}
+
+
+
+
+
+{% comment %} {% extends "bigArt/base.html" %}
 {% load static %}
 
 {% block content %}
@@ -116,4 +241,4 @@
         </form>
     </section>
 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}

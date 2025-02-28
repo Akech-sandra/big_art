@@ -1,32 +1,137 @@
+<!-- bigArt/order_confirm.html -->
+
 {% extends "bigArt/base.html" %}
 {% load static %}
 
 {% block content %}
 <main>
-    <section id="order-confirmation-page">
-        <h1>Order Confirmation</h1>
-        <p>Thank you for your order!</p>
+    <style>
+        .background-image {
+            background-image: url('{% static 'images/20.jpg' %}');
+            background-size: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+            z-index: -1; 
+        }
+        #order-confirmation-page {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #order-confirmation-page h1 {
+            font-size: 24px;
+            color: #fff;
+            text-align: center;
+        }
+        #order-confirmation-page p {
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+        }
+        #order-confirmation-page ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #order-confirmation-page li {
+            font-size: 16px;
+            color: #fff;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        #order-confirmation-page li:last-child {
+            border-bottom: none;
+        }
+        #order-confirmation-page strong {
+            font-size: 18px;
+            color: #ccc;
+        }
+        #order-confirmation-page form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #order-confirmation-page button {
+            background-color: #f4b400;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #order-confirmation-page button:hover {
+            background-color: #ff5500;
+        }
+    </style>
+    <div class="background-image"></div>
+    <section id="order-confirmation-page" style="margin-top: 7em; margin-bottom: 3em;">
+        <h1><b>Order Confirmation</b></h1>
+        <p>Your order has been received successfully. Thank you for ordering!</p>
         <ul>
-            {% for order in orders %}
-            <li>Order #{{ order.id }} - ${{ order.total_price }} - {{ order.created_at }}</li>
+            {% for item in order_details %}
+            <li>{{ item.product.product_name }} - ${{ item.unit_price }} x {{ item.quantity }} = ${{ item.total_price }}</li>
             {% endfor %}
         </ul>
+        <p><strong>Total Price: ${{ total_price }}</strong></p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirm Order</button>
+        </form>
     </section>
 </main>
 {% endblock %}
 
 
 
-{% comment %} {% extends "bigArt/base.html" %}
+
+
+{% comment %} <!-- bigArt/order_confirm.html -->
+
+{% extends "bigArt/base.html" %}
 {% load static %}
 
 {% block content %}
+
+<style>
+    .background-image {
+        background-image: url('{% static 'images/20.jpg' %}');
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        z-index: -1; 
+    }
+  </style>
+  <div class="background-image"></div>
 <main>
     <section id="order-confirmation-page">
         <h1>Order Confirmation</h1>
-        <p>Thank you for your order!</p>
-        <p>Your order has been successfully placed. We will send you an email confirmation shortly.</p>
-        <p>Total: ${{ total_price }}</p>
+        <p>Your order has been confirmed successfully. Thank you for your order!</p>
+        <ul>
+            {% for item in order_details %}
+            <li>{{ item.product.product_name }} - ${{ item.unit_price }} x {{ item.quantity }} = ${{ item.total_price }}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total Price: ${{ total_price }}</strong></p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirm Order</button>
+        </form>
     </section>
 </main>
-{% endblock %} {% endcomment %}
+{% endblock %}
+
+
+
+
+ {% endcomment %}

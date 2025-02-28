@@ -20,3 +20,30 @@
     </div>
 </div>
 {% endblock %}
+
+
+
+
+
+{% comment %} {% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Ceramics Gallery</h2>
+    <div class="row">
+        {% for ceramic in ceramics %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ seramics.image.url }}" class="card-img-top" alt="{{ seramics.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ seramics.title }}</h5>
+                    <p class="card-text"><strong>Artist:</strong> {{ seramics.artist }}</p>
+                    <p class="card-text">{{ seramics.description|truncatewords:20 }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} {% endcomment %}

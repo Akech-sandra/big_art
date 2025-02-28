@@ -55,3 +55,65 @@
 </div>
 
 {% endblock %}
+
+
+
+
+
+{% comment %} {% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .background-image {
+        background-image: url('{% static 'images/20.jpg' %}');
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        z-index: -1; 
+    }
+</style>
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+<div class="background-image"></div>
+<div class="signup-container" style="margin-top: 2em; margin-bottom: 2em;">
+    <div class="signup-form">
+        <h2>Log into Your Shopping Account</h2>
+        <form method="POST" style="margin-left: 30px; padding: 10px;">
+            {% csrf_token %}
+            <div class="row g-3" style="margin-bottom: 15px;">
+                <div class="col-md-6">
+                    {{ form.email.errors }}
+                    <input type="email" name="email" class="form-control" placeholder="Email Address" aria-label="email" value="{{ form.email.value|default_if_none:'' }}">
+                </div>
+                <div class="col-md-6">
+                    {{ form.password.errors }}
+                    <input type="password" name="password1" class="form-control" placeholder="Enter Password" aria-label="Password" value="{{ form.password1.value|default_if_none:'' }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" style="padding-left: 100px; padding-right: 100px; padding: 5px;">Log In</button>
+            </div>
+            <div class="form-group" style="margin-top: 10px;">
+                <a href="{% url 'password_reset' %}" class="btn btn-link">Forgotten your Password?</a>
+            </div>
+            {% if error_message %}
+            <div class="alert alert-danger" role="alert" style="margin-top: 15px;">
+                {{ error_message }}
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %} {% endcomment %}

@@ -9,6 +9,7 @@
       margin: 0;
       padding: 0;
       background-color: #f5f5f5;
+      font-size: 16px;
   }
 
  
@@ -26,9 +27,10 @@
   h1, h2 {
       margin-bottom: 20px;
       font-weight: bold;
-      font-size: 3em;
+      font-size: 20px;
       margin-bottom: 1em;
       text-align: center;
+      color: #f4b400;
   }
 
   p {
@@ -98,6 +100,7 @@
 
 main {
     padding: 50px 0;
+    margin-top: 5em;
 }
 
 #about-us {
@@ -106,13 +109,13 @@ main {
     margin-top: 5em;
 }
 
-h1, h2 {
+{% comment %} h1, h2 {
     margin-bottom: 20px;
     font-weight: bold;
     font-size: 3em;
     margin-bottom: 1em;
     text-align: center;
-}
+} {% endcomment %}
 
 p {
     line-height: 1.6;
@@ -464,6 +467,8 @@ button#myBtn:hover {
 
 </style>
 
+
+
 <main>
     <section id="about-us">
         <h1>About Us</h1>
@@ -502,7 +507,7 @@ button#myBtn:hover {
                 </div>
                 <div class="carousel-item">
                     <img src="{% static 'images/31.png' %}" class="d-block w-100" alt="ArtCraft Image">
-                    <div class="carousel-caption d-none d-md-block">
+                    <div class="carousel-caption d-none d-md-block" style="background-color: rgba(0, 0, 0, 0.6);">
                         <p>Experience the joy of owning a piece of art that is truly unique and one-of-a-kind. At ArtCraft, each artwork tells a story and reflects the passion and creativity of its creator. Browse our collection and find that perfect piece to adorn your space.</p>
                     </div>
                 </div>
@@ -540,38 +545,33 @@ button#myBtn:hover {
             </div>
         </div>
         <h2>Features and Services</h2>
-        <div class="container1">
-            <div class="col-md-4">
-                <div class="card1">
-                    <img src="{% static 'images/46.jpeg' %}" class="card-img-top" alt="Marketplace">
-                    <div class="card-body">
-                        <p class="card-text" style="color: black;"><b style="text-align: center; margin-left: 100px;">Marketplace</b><br>Discover a world of creativity and craftsmanship at your fingertips with our vibrant marketplace! Step into a global bazaar brimming with a diverse array of art and craft products, each telling its own unique story.</p>
-                    </div>
-                </div>
+        <div class="card-group">
+            <div class="card">
+              <img src="{% static 'images/46.jpeg' %}" class="card-img-top" alt="Marketplace">
+              <div class="card-body">
+                <h5 class="card-title">Marketplace</h5>
+                <p class="card-text">Discover a world of creativity and craftsmanship at your fingertips with our vibrant marketplace! Step into a global bazaar brimming with a diverse array of art and craft products, each telling its own unique story.</p>
+                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+              </div>
             </div>
-            <div class="col-md-4">
-                <div class="card1">
-                    <img src="{% static 'images/49.png' %}" class="card-img-top" alt="Promotional Tools">
-                    <div class="card-body">
-                        <p class="card-text" style="color: black;">
-                            <b style="text-align; margin-left: 85px;">Promotional Tools</b> <br>
-                            Elevate your art with our innovative promotional tools. Reach a global audience through personalized campaigns, online galleries, and SEO-optimized profiles. Use targeted ads and analytics to grow your fanbase. Whether new or experienced, build a compelling brand and showcase your unique voice.
-                        </p>
-                    </div>
-                </div>
+            <div class="card">
+              <img src="{% static 'images/49.png' %}" class="card-img-top" alt="Promotional Tools">
+              <div class="card-body">
+                <h5 class="card-title">Promotional Tools</h5>
+                <p class="card-text">Elevate your art with our innovative promotional tools. Reach a global audience through personalized campaigns, online galleries, and SEO-optimized profiles. Use targeted ads and analytics to grow your fanbase. Whether new or experienced, build a compelling brand and showcase your unique voice.</p>
+                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+              </div>
             </div>
-
-            <div class="col-md-4">
-                <div class="card1">
-                    <img src="{% static 'images/53.jpg' %}" class="card-img-top" alt="Community Engagement">
-                    <div class="card-body">
-                        <p class="card-text" style="color: black;">
-                            <b style="text-align: center; margin-left: 80px;">Community Engagement</b> <br>
-                            Join a vibrant community where creativity thrives! Engage in forums, share techniques, and attend exclusive events. Whether showcasing your work or discovering new talent, our platform inspires and connects. Be part of a supportive environment celebrating artistic expression.</p>
-                    </div>
-                </div>
+            <div class="card">
+              <img src="{% static 'images/53.jpg' %}" class="card-img-top" alt="Community Engagement">
+              <div class="card-body">
+                <h5 class="card-title">Community Engagement</h5>
+                <p class="card-text">  Join a vibrant community where creativity thrives! Engage in forums, share techniques, and attend exclusive events. Whether showcasing your work or discovering new talent, our platform inspires and connects. Be part of a supportive environment celebrating artistic expression.</p>
+                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+              </div>
             </div>
-            
+          </div>
+             
             
         </div>
     </section>
@@ -580,7 +580,7 @@ button#myBtn:hover {
         <div class="media">
             <img src="{% static 'images/54.jpg' %}" alt="Team Working">
             <video controls>
-                <source src="{% static 'videos/work.mp4' %}" type="video/mp4">
+                <source src="{% static 'videos/work.mp4' %}" type="video/mp4" alt = "Amuku Godwin designing a wildlife sculpture">
                 Your browser does not support the video tag.
             </video>
         </div>
@@ -593,7 +593,6 @@ button#myBtn:hover {
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endfor %}
-
 
 <div class="signup-container" style="margin-top: 1em;">
     <div class="signup-form">
@@ -626,120 +625,21 @@ button#myBtn:hover {
                     {{ form.message }}
                 </div>
             </div>
-            <div class="form-group form-group-center" style="padding-left: 210px; padding-right: 210px;">
-                <button type="submit">Contact</button>
+            <div class="form-group d-flex justify-content-center mt-3">
+                <button type="submit" class="btn btn-primary">Contact</button>
             </div>
             {% if error_message %}
-            <div class="alert alert-danger" role="alert" style="margin-top: 15px;">
+            <div class="alert alert-danger mt-3" role="alert">
                 {{ error_message }}
             </div>
             {% endif %}
         </form>
     </div>
-
-</main>
-
-
-
-{% comment %} <main>
-    <section id="about-us">
-        <h1>About Us</h1>
-        <div class="carousel">
-            <div class="content1">
-                <img src="{% static 'images/30.png' %}" alt="ArtCraft Image" height="300" width="500">
-                <p>Welcome to ArtCraft, your gateway to a world of artistic wonders! Our platform is a vibrant marketplace where artists from diverse backgrounds showcase their talents and sell their creations to art enthusiasts worldwide. Join us on a journey of creativity and discovery!</p>
-            </div>
-            <div class="content1">
-                <img src="{% static 'images/27.png' %}" alt="ArtCraft Image" height="300" width="500">
-                <p>Discover the beauty of handmade artistry on ArtCraft. From intricately designed jewelry to beautifully crafted pottery, our platform features a wide range of unique and exquisite art pieces that are sure to captivate your heart and soul.</p>
-            </div>
-            <div class="content1">
-                <img src="{% static 'images/41.jpeg' %}" alt="ArtCraft Image" height="300" width="500">
-                <p>At ArtCraft, we believe in empowering artists and promoting their work on a global scale. By providing a platform for artists to showcase their talents and connect with a larger audience, we aim to revolutionize the way art is marketed and appreciated.</p>
-            </div>
-            <div class="content1">
-                <img src="{% static 'images/34.jpg' %}" alt="ArtCraft Image" height="300" width="500">
-                <p>Join a community of artists and art lovers on ArtCraft. Engage in discussions, share your passion for art, and explore new artistic horizons. Whether you're an artist looking to promote your work or an art enthusiast seeking inspiration, ArtCraft is the place for you.</p>
-            </div>
-            <div class="content1">
-                <img src="{% static 'images/31.png' %}" alt="ArtCraft Image" height="300" width="500">
-                <p>Experience the joy of owning a piece of art that is truly unique and one-of-a-kind. At ArtCraft, each artwork tells a story and reflects the passion and creativity of its creator. Browse our collection and find that perfect piece to adorn your space.</p>
-            </div>
-        </div>
-        
-        <div class="card-container">
-            <div class="card">
-                <h2>Our Story</h2>
-                <p>
-                    Established in 2024, BigArtUg was conceived from a profound love for artistic expression and a commitment to championing the endeavors of independent artists. Our journey began with a keen observation of the art market, recognizing a significant void in platforms that cater comprehensively to the needs of artists.<span id="dots">...</span><span id="more"> This realization ignited our mission to create an inclusive and empowering space for artists to thrive.
-            
-                    At BigArtUg, we are dedicated to bridging the gap between artists and their audience by providing innovative marketing solutions tailored to their unique needs. Our platform is more than just a marketplace; it's a community where artists can showcase their creations, connect with enthusiasts, and gain the recognition they deserve.
-                    
-                    We understand the challenges artists face in marketing their products, which is why we have curated a range of tools and resources to support them every step of the way. From personalized marketing strategies to educational workshops, we are committed to empowering artists and helping them succeed in the competitive art market.
-                    
-                    Join us in our mission to revolutionize the way art is marketed and appreciated. Whether you're an artist looking to showcase your work or an art lover seeking inspiration, BigArtUg is your ultimate destination for all things art and craft.
-                    
-                </span></p>
-                <button onclick="myFunction()" id="myBtn">Read more</button>
-            </div>
-        
-                <div class="card">
-                    <h2>Our Mission</h2>
-                    <p>Our mission is to empower artists by providing them with the tools and resources they need to market their products effectively. We aim to create a vibrant community where art lovers can discover and purchase unique pieces directly from talented creators.</p>
-                </div>
-            </div>
-        </div>
-        <h2>Features and Services</h2>
-        <div class="container1">
-                        <div class="col-md-4">
-                            <div class="card1">
-                                <img src="{% static 'images/46.jpeg' %}" class="card-img-top" alt="Marketplace">
-                                <div class="card-body">
-                                    <p class="card-text" style="color: black;" ><b style="text-align: center;">Marketplace </b> <br>Discover a world of creativity and craftsmanship at your fingertips with our vibrant marketplace! Step into a global bazaar brimming with a diverse array of art and craft products, each telling its own unique story. <span id="dots">...</span><span id="more">  From intricate handwoven textiles and exquisite pottery to striking contemporary paintings and bespoke jewelry, our marketplace offers a treasure trove of artistic expressions from every corner of the globe. Every piece is a testament to the skill and passion of talented artisans, bringing you closer to cultures and traditions from far and wide. Whether you’re seeking a one-of-a-kind gift, a statement piece for your home, or simply looking to indulge in the beauty of handmade art, our platform connects you directly with creators, ensuring that every purchase supports the artist behind the work. Immerse yourself in a world where creativity knows no boundaries and let our marketplace inspire your own artistic journey. Explore, discover, and connect with the heartbeat of global art and craft.</span></p>
-                                    <button onclick="myFunction()" id="myBtn">Read more</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card1">
-                                <img src="{% static 'images/49.png' %}" class="card-img-top" alt="Promotional Tools">
-                                <div class="card-body">
-                                    <p class="card-text" style="color: black;">Promotional Tools <br>Elevate your artistic journey with our cutting-edge promotional tools, crafted specifically to amplify your reach and impact. Imagine having access to a suite of innovative marketing solutions that put your art in front of a global audience, <span id="dots">...</span><span id="more">breaking through geographical boundaries and connecting with enthusiasts everywhere. Our tools include personalized social media campaigns, interactive online galleries, and SEO-optimized profiles to ensure your work gets the visibility it deserves. With targeted advertising options and analytics at your fingertips, you can fine-tune your strategy to engage more viewers and turn them into loyal fans. Whether you're a seasoned artist or just starting out, our promotional tools are designed to help you build a compelling brand and showcase your unique voice to the world. Join our platform and watch your audience grow, as you captivate and inspire with your art.</span></p>
-                                    <button onclick="myFunction()" id="myBtn">Read more</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card1">
-                                <img src="{% static 'images/53.jpg' %}" class="card-img-top" alt="Community Engagement">
-                                <div class="card-body">
-                                    <p class="card-text" style="color: black;">Community Engagement <br> Unlock a vibrant and thriving community where creativity knows no bounds! Our platform is not just a marketplace, but a dynamic hub for artists and art enthusiasts alike. <span id="dots">...</span><span id="more">Dive into engaging forums where ideas flourish, and innovative techniques are shared.  Attend exclusive events that bring together the brightest minds in the art world, offering you unparalleled opportunities to network and collaborate. Whether you're an artist looking to showcase your work or an art lover eager to discover new talent, our community is designed to inspire and connect. Join us and be a part of a supportive, energetic environment that celebrates and nurtures artistic expression.</span></p>
-                                    <button onclick="myFunction()" id="myBtn">Read more</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-        <h2>Meet the Team</h2>
-        <p class="card2">Our team is composed of passionate individuals with backgrounds in art, technology, and marketing. Together, we strive to make ArtCraft the go-to platform for artists looking to market their work.</p>
-        <div class="media">
-            <img src="{% static 'images/54.jpg' %}" alt="Team Working">
-            <video controls>
-                <source src="{% static 'videos/work.mp4' %}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-        <h2>Contact Us</h2>
-        <p>Have questions or need support? Reach out to us at <a href="mailto:support@artcraft.com">bigartug24@gmail.com</a>. Or</p>
-        {% for message in messages %}
-<div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 5em; margin-bottom: 1em;">
-    {{ message }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-{% endfor %}
 
 
-<div class="signup-container" style="margin-top: 2rem;">
+
+{% comment %} <div class="signup-container" style="margin-top: 1em;">
     <div class="signup-form">
         <h2>Contact Us Here</h2>
         <form method="POST" action="https://formspree.io/f/mnnandza" style="width: 100%;">
@@ -779,10 +679,13 @@ button#myBtn:hover {
             </div>
             {% endif %}
         </form>
-    </div>
-</div>
-    </section>
-</main> {% endcomment %}
+    </div> {% endcomment %}
+
+</main> 
+
+
+
+
 
 <script src="{% static 'js/carousel.js' %}"></script>
 
@@ -792,6 +695,17 @@ button#myBtn:hover {
 <!-- Include Slick Carousel -->
 <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <!-- Initialize Slick Carousel -->
+
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
 <script>
     let slideIndex = 0;
     const slides = document.getElementsByClassName("content1");

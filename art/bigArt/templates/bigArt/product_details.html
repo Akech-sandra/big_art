@@ -191,8 +191,303 @@
         <p>Available: {{ product.quantity }}</p>
         {% if product.quantity > 0 %}
             {% if user.is_authenticated %}
-            {% comment %} <button onclick="addToCart('{{ product.product_name }}', '{{ product.unit_price }}')">Add to Cart</button> {% endcomment %}
                 <button onclick="addToCart('{{ product.id }}', '{{ product.product_name }}', '{{ product.unit_price }}', {{ product.quantity }})" class="btn-custom">Add to Cart</button>
+            {% else %}
+                <button onclick="window.location.href='{% url 'login' %}'" class="btn-custom">Login to add to cart</button>
+            {% endif %}
+        {% else %}
+            <button disabled class="btn-custom">Out of Stock</button>
+        {% endif %}
+    </div>
+</div>
+
+<div class="reviews-section">
+    <h2>Client Reviews</h2>
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <p><strong>{{ review.user_name }}</strong> says:</p>
+                <p>{{ review.comment }}</p>
+                <p><small>Posted on {{ review.created_at | date:"F d, Y H:i:s" }}</small></p>
+            </li>
+        {% empty %}
+            <li>No reviews yet.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Form to submit a new review -->
+    {% if user.is_authenticated %}
+        <h3>Add Your Review</h3>
+        <form method="post" action="{% url 'add_review' product.id %}">
+            {% csrf_token %}
+            <textarea name="comment" rows="4" placeholder="Write your review..." required></textarea><br>
+            <button type="submit">Submit Review</button>
+        </form>
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">login</a> to add a review.</p>
+    {% endif %}
+</div>
+
+{% if related_products %}
+    <div class="related-products-section">
+        <h2>Related Products</h2>
+        <div class="product-list">
+            {% for related_product in related_products %}
+                <div class="product-item">
+                    <a href="{% url 'product_detail' related_product.id %}">
+                        <img src="{{ related_product.image.url }}" alt="{{ related_product.product_name }}">
+                        <h3>{{ related_product.product_name }}</h3>
+                        <p class="price">UGX {{ related_product.unit_price }}</p>
+                        <p>Available: {{ product.quantity }}</p>
+                        <p> {{ product.short_description }}</p>
+                    </a>
+                    <a href="{% url 'product_detail' related_product.id %}" class="btn btn-custom">View Details</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function addToCart(productId, productName, productPrice, productQuantity) {
+    const csrftoken = getCookie('csrftoken');
+    fetch(`{% url 'add_to_cart' 0 %}`.replace(0, productId), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            product_id: productId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+            renderCart();
+        } else {
+            alert(data.message);
+        }
+    });
+}
+</script>
+{% endblock %}
+
+
+
+
+
+{% comment %} {% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Styles for product details and reviews section */
+    .product-details {
+        max-width: 800px;
+        margin: 0 auto;
+        margin-top: 8em;
+        margin-bottom: 3em;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+    }
+    .product-details .product-image {
+        flex: 1;
+        margin-right: 20px;
+    }
+    .product-details .product-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+    .product-details .product-info {
+        flex: 2;
+    }
+    .product-details h2 {
+        font-size: 2em;
+        margin: 10px 0;
+    }
+    .product-details p {
+        font-size: 1.2em;
+        color: #666;
+    }
+    .product-details .price {
+        font-size: 1.5em;
+        color: #333;
+    }
+   .product-details .btn-custom {
+        background-color: goldenrod;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    .product-details .btn-custom:hover {
+        background-color: #ff5500;
+    } 
+
+    .product-item .btn-custom {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Remove default link underline */
+        display: inline-block; /* Ensure it behaves like a button */
+        transition: background-color 0.3s ease;
+    }
+
+    .product-item .btn-custom:hover {
+        background-color: #555; /* Darken background on hover */
+    }
+    
+    /* Styles for reviews section */
+    .reviews-section {
+        margin-top: 3em;
+        margin-bottom: 3em;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .reviews-section h2 {
+        font-size: 2em;
+        margin-bottom: 1em;
+        color: #333;
+        text-align: center;
+        font-weight: 700;
+    }
+    .reviews-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .reviews-section li {
+        margin-bottom: 2em;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 1em;
+    }
+    .reviews-section li:last-child {
+        border-bottom: none;
+    }
+    .reviews-section p {
+        font-size: 1.2em;
+        color: #555;
+    }
+    .reviews-section small {
+        color: #999;
+    }
+    .reviews-section form {
+        margin-top: 2em;
+        text-align: center;
+    }
+    .reviews-section form textarea {
+        width: 100%;
+        height: 200px;
+        padding: 10px;
+        font-size: 1.1em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: vertical;
+    }
+    .reviews-section form button {
+        background-color: #f4b400;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    .reviews-section form button:hover {
+        background-color: #ff7733;
+    }
+
+    /* Styles for related products section */
+    .related-products-section {
+        margin-top: 3em;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .related-products-section h2 {
+        font-size: 2em;
+        margin-bottom: 1em;
+        color: #333;
+        text-align: center;
+        font-weight: 700;
+    }
+    .related-products-section .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .related-products-section .product-item {
+        width: 300px;
+        margin: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .related-products-section .product-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+    .related-products-section .product-item h3 {
+        font-size: 1.5em;
+        margin: 10px 0;
+    }
+    .related-products-section .product-item p {
+        font-size: 1.2em;
+        color: #666;
+    }
+</style>
+<h2></h2>
+<div class="product-details">
+    <div class="product-image">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
+        {% endif %}
+    </div>
+    <div class="product-info">
+        <h2>{{ product.product_name }}</h2>
+        <p class="price">UGX {{ product.unit_price }}</p>
+        <p>Artist: {{ product.artist }}</p>
+        <p>Description: {{ product.description }}</p>
+        <p>Available: {{ product.quantity }}</p>
+        {% if product.quantity > 0 %}
+            {% if user.is_authenticated %}
+            {% comment %} <button onclick="addToCart('{{ product.product_name }}', '{{ product.unit_price }}')">Add to Cart</button> {% endcomment %}
+                {% comment %} <button onclick="addToCart('{{ product.id }}', '{{ product.product_name }}', '{{ product.unit_price }}', {{ product.quantity }})" class="btn-custom">Add to Cart</button>
             {% else %}
                 <button onclick="window.location.href='{% url 'login' %}'" class="btn-custom">Login to add to cart</button>
             {% endif %}
@@ -287,4 +582,4 @@ function addToCart(productId, productName, productPrice, productQuantity) {
     });
 }
 </script>
-{% endblock %}
+{% endblock %} {% endcomment %}

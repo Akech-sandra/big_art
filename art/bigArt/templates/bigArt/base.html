@@ -21,17 +21,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-    <!-- Bootstrap CSS -->
-    {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> {% endcomment %}
-</head>
+  </head>
 <style>
     body {
         font-family: Arial, sans-serif;
-        font-size: 16px; /* Adjusted the global font size */
+        font-size: 16px; 
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -93,6 +87,12 @@
     nav .nav-links a:hover {
         background-color: #f4b400;
         color: black;
+        transition: background-color 0.3s ease;
+        transition: color 0.3s ease;
+        transition: padding 0.3s ease;
+        transition: margin 0.3s ease;
+        border-radius: 5px;
+
     }
     
     nav .dropdown-content {
@@ -255,26 +255,30 @@
             </div> 
         
             <li><a href="{% url 'about' %}">About Us</a></li>
+
+            <div class="dropdown1">
+                <a href="#" class="dropbtn1">Account</a>
+                <div class="dropdown-content1">
+                    {% if user.is_authenticated %}
+                        <div class="dropdown-item1">
+                            <img src="{% static 'images/lo.png' %}" alt="Log Out" height="25" width="30">
+                            <a href="{% url 'logout' %}">Log Out</a>
+                        </div>
+                    {% else %}
+                        <div class="dropdown-item1">
+                            <img src="{% static 'images/su.png' %}" alt="Sign Up" height="25" width="30">
+                            <a href="{% url 'signup' %}">Sign Up</a>
+                        </div>
+                        <div class="dropdown-item1">
+                            <img src="{% static 'images/li.png' %}" alt="Log In" height="25" width="30">
+                            <a href="{% url 'login' %}">Log In</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
             
             <li class="dropdown">
                 
-                    <div class="dropdown1">
-                        <a href="#" class="dropbtn1">Account</a>
-                        <div class="dropdown-content1">
-                            <div class="dropdown-item1">
-                                <img src="{% static 'images/su.png' %}" alt="Sign Up" height="25" width="30">
-                                <a href="{% url 'signup' %}">Sign Up</a>
-                            </div>
-                            <div class="dropdown-item1">
-                                <img src="{% static 'images/li.png' %}" alt="Log In" height="25" width="30">
-                                <a href="{% url 'login' %}">Log In</a>
-                            </div>
-                            <div class="dropdown-item1">
-                                <img src="{% static 'images/lo.png' %}" alt="Log Out" height="25" width="30">
-                                <a href="{% url 'logout' %}">Log Out</a>
-                            </div>
-                        </div>
-                    </div>
         </ul>
     </nav>
 

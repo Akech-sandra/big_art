@@ -22,31 +22,24 @@
       font-size: 3em;
       margin-bottom: 1em;
   }
-
   .product-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 25px;
-      justify-content: center;
+      justify-content: space-between;
   }
-
   .product-card {
       background-color: #fff;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      padding: 5px;
+      padding: 20px;
       margin: 10px;
-      width: 300px;
+      width: calc(33% - 20px);
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
   }
   .product-card img {
       max-width: 100%;
       height: auto;
       border-radius: 5px;
-      padding: 20px;
   }
   .product-card h2 {
       font-size: 1.5em;
@@ -56,7 +49,7 @@
       font-size: 1.2em;
       color: #666;
   }
-  .product-card button, .btn-custom {
+  .product-card button {
       background-color: #ff6600;
       color: #fff;
       border: none;
@@ -64,14 +57,12 @@
       font-size: 1em;
       cursor: pointer;
       border-radius: 5px;
-      margin-top: 10px;
-      text-decoration: none;
   }
-  .product-card button:hover, .btn-custom:hover {
+  .product-card button:hover {
       background-color: #ff5500;
   }
   .cart {
-      position: fixed;
+      position: absolute;
       top: 50px;
       right: 20px;
       background-color: #fff;
@@ -107,20 +98,6 @@
   .cart button:hover {
       background-color: #f35b04;
   }
-
-  .product-card button {
-    background-color: #ff6600;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 5px;
-}
-.product-card button:hover {
-    background-color: #ff5500;
-}
-  
   .btn-custom {
     background-color: goldenrod;
     color: white;
@@ -177,9 +154,97 @@
   .search-input {
       flex-grow: 1;
   }
+
+  .cart {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+.cart h2 {
+    margin-bottom: 20px;
+    color: #f4b400;
+}
+.cart table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+.cart th, .cart td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.cart th {
+    background-color: #f4b400;
+    color: #fff;
+}
+.cart tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.cart p {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.cart button {
+    background-color: #f4b400;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 5px;
+}
+.cart button a {
+    color: #fff;
+    text-decoration: none;
+}
+.cart button:hover {
+    background-color: #fb8500;
+}
+
+
+@media (max-width: 1200px) {
+    .product-card {
+        width: calc(50% - 20px);
+    }
+}
+@media (max-width: 768px) {
+    .product-card {
+        width: calc(100% - 20px);
+    }
+    .filter-search {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+    }
+    .filter-search input[type="text"],
+    .filter-search input[type="submit"] {
+        font-size: 14px;
+        padding: 8px;
+    }
+    .cart {
+        padding: 10px;
+    }
+    .cart th, .cart td {
+        padding: 5px;
+    }
+    .cart button {
+        padding: 5px 10px;
+        font-size: 0.8em;
+    }
+}
 </style>
 
 <main>
+    
     <section id="shopping-page">
         <h1>Shop</h1>
         <div class="filter-search">
@@ -194,10 +259,12 @@
             {% for category in categories %}
                 <div class="category-item">
                     <a href="?category={{ category.id }}">{{ category }}</a>
-                </div>
+                    </div>
             {% endfor %}
-        </div>
+                 </div>
         <div class="product-grid">
+            <div>Total Views: {{ total_views }}</div>
+            <div>Unique Viewers: {{ unique_viewers }}</div>
             {% for product in products %}
             <div class="product-card">
                 {% if product.image %}
@@ -206,84 +273,7 @@
                 <h2>Name: {{ product.product_name }}</h2>
                 <p>UGX {{ product.unit_price }}</p>
                 <p>Artist: {{ product.artist }}</p>
-                <p>Available: {{ product.quantity }}</p>
-                <a href="{% url 'product_detail' product.id %}" class="btn btn-custom">View Details</a>
-                {% if user_is_authenticated %}
-                    <button onclick="addToCart('{{ product.product_name }}', '{{ product.unit_price }}')">Add to Cart</button>
-                {% else %}
-                    <a href="{% url 'login' %}" class="login-required">Login to add to cart</a>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-
-    <div class="cart">
-        <h2>Shopping Cart</h2>
-        <ul id="cart-items"></ul>
-        <p id="total-price">Total: UGX0.00</p>
-        <button><a href="{% url 'view_cart' %}">View Cart</a></button>
-    </div>
-</main>
-
-<script>
-    let cart = [];
-    let totalPrice = 0;
-  
-    function addToCart(productName, productPrice) {
-        cart.push({ name: productName, price: parseFloat(productPrice) });
-        totalPrice += parseFloat(productPrice);
-        renderCart();
-    }
-  
-    function removeFromCart(index) {
-        totalPrice -= cart[index].price;
-        cart.splice(index, 1);
-        renderCart();
-    }
-  
-    function renderCart() {
-        const cartItems = document.getElementById('cart-items');
-        cartItems.innerHTML = '';
-        cart.forEach((item, index) => {
-            cartItems.innerHTML += `<li>${item.name} - UGX${item.price.toFixed(2)} <button onclick="removeFromCart(${index})">Remove</button></li>`;
-        });
-        document.getElementById('total-price').innerText = `Total: UGX${totalPrice.toFixed(2)}`;
-    }
-</script>
-{% endblock %}
-
-
-
-
-{% comment %} <main>
-    <section id="shopping-page">
-        <h1>Shop</h1>
-        <div class="filter-search">
-            <div class="search">
-                <form action="" method="GET">
-                    {{ product.form }}
-                    <input type="submit" value="Search" class="btn btn-primary"/>
-                </form>
-            </div>
-        </div>
-        <div class="category-list">
-            {% for category in categories %}
-                <div class="category-item">
-                    <a href="?category={{ category.id }}">{{ category }}</a>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="product-grid">
-            {% for product in products %}
-            <div class="product-card">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
-                {% endif %}
-                <h2>Name: {{ product.product_name }}</h2>
-                <p>UGX {{ product.unit_price }}</p>
-                <p>Artist: {{ product.artist }}</p>
-                <p>Description: {{ product.description }}</p>
+                <p> {{ product.short_description }}</p>
                 <p>Available: {{ product.quantity }}</p>
                 <a href="{% url 'product_detail' product.id %}" class="btn btn-custom">View Details</a>
                 {% if product.quantity > 0 %}
@@ -297,18 +287,59 @@
                 {% endif %}
             </div>
             {% endfor %}
+            
         </div>
     </section>
 
     <div class="cart">
         <h2>Shopping Cart</h2>
-        <ul id="cart-items"></ul>
-        <p id="total-price">Total: UGX0.00</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cart-data">
+                {% for cart_item in cart %}
+                <tr id="cart-item-{{ cart_item.product.id }}">
+                    <td>{{ cart_item.product.product_name }}</td>
+                    <td>UGX {{ cart_item.product.unit_price }}</td>
+                    <td>{{ cart_item.quantity }}</td>
+                    <td>UGX {{ cart_item.total_price }}</td>
+                    <td>
+                        <button onclick="removeFromCart('{{ cart_item.product.id }}')" class="btn btn-custom">Remove</button>
+                        </td>
+                        
+                    {% comment %} </tr> {% endcomment %}
+                    {% comment %} <td><button onclick="removeFromCart({{ cart_item.product.id }})" class="btn btn-danger">Remove</button></td> {% endcomment %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>Total: UGX <span id="total-price">{{ total_price }}</span></p>
         <button><a href="{% url 'checkout' %}">Checkout</a></button>
     </div>
+
+
+    
 </main>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        calculateTotal();
+    });
+
+    function calculateTotal() {
+        let totalPrice = 0;
+        {% for cart_item in cart %}
+            totalPrice += {{ cart_item.total_price }};
+        {% endfor %}
+        document.getElementById('total-price').textContent =  totalPrice.toFixed(2);
+    }
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -338,6 +369,31 @@ function addToCart(productId, productName, productPrice, productQuantity) {
     })
     .then(response => response.json())
     .then(data => {
+        console.log(data)
+        
+        const cartData = document.getElementById('cart-data');
+        const total =  document.getElementById('total-price')
+        total.textContent = Number(parseFloat(total.innerHTML) + parseFloat(data.data.unit_price)).toFixed(2);
+    
+
+        const newRow = document.createElement('tr');
+        const productNameCell = document.createElement('td');
+        const unitPriceCell = document.createElement('td');
+        const quantityCell = document.createElement('td');
+        const totalPriceCell = document.createElement('td');
+
+        productNameCell.textContent = `${data.data.name}`;
+        unitPriceCell.textContent = `$ ${data.data.unit_price}`;
+        quantityCell.textContent = `${data.data.quantity}`;
+        totalPriceCell.textContent = `$ ${data.data.total_price}`;
+
+        newRow.appendChild(productNameCell);
+        newRow.appendChild(unitPriceCell);
+        newRow.appendChild(quantityCell);
+        newRow.appendChild(totalPriceCell);
+
+        cartData.appendChild(newRow);
+
         if (data.status === 'success') {
             alert(data.message);
             renderCart();
@@ -368,51 +424,95 @@ function renderCart() {
 document.addEventListener('DOMContentLoaded', function() {
     renderCart();
 });
-</script> {% endcomment %}
+
+
+{% comment %} function removeFromCart(productId) {
+    const csrftoken = getCookie('csrftoken');
+    fetch(`/remove_from_cart/${productId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            document.getElementById(`cart-item-${productId}`).remove();
+            updateTotalPrice();
+            alert(data.message);
+        } else {
+            alert(data.message);
+        }
+    });
+} {% endcomment %}
+
+function updateTotalPrice() {
+    let totalPrice = 0;
+    document.querySelectorAll('#cart-data tr').forEach(row => {
+        const subtotal = parseFloat(row.querySelector('td:nth-child(4)').textContent.replace('UGX', '').trim());
+        totalPrice += subtotal;
+    });
+    document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function removeFromCart(productId) {
+    const csrftoken = getCookie('csrftoken');
+    fetch(`{% url 'remove_from_cart' 0 %}`.replace(0, productId), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            product_id: productId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+            renderCart();  // Refresh cart display
+        } else {
+            alert(data.message);
+        }
+    });
+}
+
+
+</script>
+
+{{pages_obj }}
+Has previous:{{pages_obj.has_previous}}
+Has next:{{pages_obj.has_next}}
+current:{{pages_obj.number}}
+number of pages:{{pages_obj.paginator.num_pages}}
+{% if pages_obj.has_previous %}
+    <a href="?page=1">&laquo First </a>
+    <a href="?page={{ pages_obj.previous_page_number }}">Previous</a>
+
+{% endif %}
+<br><br>
+{% endblock %}
 
 
 
 
-{% comment %} <script>
-  let cart = [];
-  let totalPrice = 0;
 
-  function addToCart(productId, productName, productPrice, productQuantity) {
-      const productIndex = cart.findIndex(item => item.id === productId);
-      if (productIndex !== -1) {
-          if (cart[productIndex].quantity < productQuantity) {
-              cart[productIndex].quantity += 1;
-              totalPrice += parseFloat(productPrice);
-          } else {
-              alert('Sorry, this product is out of stock!');
-          }
-      } else {
-          cart.push({ id: productId, name: productName, price: parseFloat(productPrice), quantity: 1, maxQuantity: productQuantity });
-          totalPrice += parseFloat(productPrice);
-      }
-      renderCart();
-  }
 
-  function removeFromCart(productId) {
-      const productIndex = cart.findIndex(item => item.id === productId);
-      if (productIndex !== -1) {
-          const product = cart[productIndex];
-          totalPrice -= product.price;
-          if (product.quantity > 1) {
-              product.quantity -= 1;
-          } else {
-              cart.splice(productIndex, 1);
-          }
-      }
-      renderCart();
-  }
 
-  function renderCart() {
-      const cartItems = document.getElementById('cart-items');
-      cartItems.innerHTML = '';
-      cart.forEach((item, index) => {
-          cartItems.innerHTML += <li>${item.name} - $${item.price.toFixed(2)} x ${item.quantity} <button onclick="removeFromCart(${item.id})">Remove</button></li>;
-      });
-      document.getElementById('total-price').innerText = Total: $${totalPrice.toFixed(2)};
-  }
-</script> {% endcomment %}

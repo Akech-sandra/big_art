@@ -16,9 +16,10 @@ from django.core.mail import send_mail
 from django.contrib.auth import views as auth_views
 from django.http import JsonResponse
 from django.utils import timezone
-
-
-# Create your views here.
+# import pagination stuff
+from django.core.paginator import Paginator
+from django.core.mail import send_mail
+from django.conf import settings
 
 def index(request):
     return render(request, 'bigArt/index.html')
@@ -87,75 +88,115 @@ def about(request):
 
 
 def shop(request):
-    products = Product.objects.all().order_by('id')
-    product=ShopFilter(request.GET,queryset=products)
+    try:
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart)
+    except Exception:
+        cart = None
+        cart_items = []
+
+    products = Product.objects.all()
+  
+    p=Paginator(Product.objects.all(),3)
+    page_number = request.GET.get('page')
+    pages_obj = p.get_page(page_number)
+    product = ShopFilter(request.GET, queryset=products)
     categories = Category.objects.all() 
-    products=product.qs
+    products = product.qs
+    
+    if request.user.is_authenticated:
+        user = request.user
+        session_key = None
+    else:
+        user = None
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.create()
+            session_key = request.session.session_key
+    
+    # Create a PageView entry if it doesn't already exist for this session or user
+    if not PageView.objects.filter(user=user, session_key=session_key).exists():
+        PageView.objects.create(user=user, session_key=session_key)
+
+    # Get the total number of page views and unique viewers
+    total_views = PageView.objects.count()
+    unique_viewers = PageView.objects.values('user', 'session_key').distinct().count()
+
     context = {
+        'cart': cart_items,
+        'pages_obj': pages_obj,
         'products': products,
         'product': product,
+        'total_views': total_views,
+        'unique_viewers': unique_viewers,
         'categories': categories, 
         'user_is_authenticated': request.user.is_authenticated
     }
     return render(request, 'bigArt/shop.html', context)
 
-def shop(request):
-    products = Product.objects.all().order_by('id')
-    product=ShopFilter(request.GET,queryset=products)
-    products=product.qs
-    context = {
-        'products': products,
-        'product': product,
-        'user_is_authenticated': request.user.is_authenticated
-    }
-    return render(request, 'bigArt/shop.html', context)
-
+# def add_to_cart(request, product_id):
+#     if request.method == 'POST':
+#         product = Product.objects.get(id=product_id)
+#         cart, created = Cart.objects.get_or_create(user=request.user)
+#         CartItem.objects.create(cart=cart,product=product, unit_price =product.unit_price,quantity=1,total_price=product.unit_price)
+#         cart.save()
+#         res =  {'name': product.product_name,'unit_price': product.unit_price,  'quantity': 1, 'total_price': product.unit_price }
+#         return JsonResponse({'status': 'success', 'message': 'Product added to cart','data': res})
+#     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 def add_to_cart(request, product_id):
     if request.method == 'POST':
         product = Product.objects.get(id=product_id)
-        cart, created = Cart.objects.get_or_create(user=request.user, product=product)
-        if created:
-            cart.quantity = 1
-        else:
-            cart.quantity += 1
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        CartItem.objects.create(cart=cart,product=product, unit_price =product.unit_price,quantity=1,total_price=product.unit_price)
         cart.save()
-        return JsonResponse({'status': 'success', 'message': 'Product added to cart'})
+        res =  {'name': product.product_name,'unit_price': product.unit_price,  'quantity': 1, 'total_price': product.unit_price }
+        return JsonResponse({'status': 'success', 'message': 'Product added to cart','data': res})
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
-
 @login_required
-def remove_from_cart(request):
-    product_id = request.POST.get('product_id')
-    product = get_object_or_404(Product, id=product_id)
-    cart = get_object_or_404(Cart, user=request.user)
-    cart_item = get_object_or_404(CartItem, cart=cart, product=product)
-
-    if cart_item.quantity > 1:
-        cart_item.quantity -= 1
-        cart_item.save()
-    else:
-        cart_item.delete()
-
-    return JsonResponse({'status': 'success', 'message': 'Item removed from cart'})
-
+def view_cart(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+    cart_data = [{'product': {'product_name': item.product.product_name, 'unit_price': item.product.unit_price}, 'quantity': item.quantity} for item in cart_items]
+    return JsonResponse({'cart': cart_data})@login_required
+# def cart_detail(request):
+#     cart = get_object_or_404(Cart, user=request.user)
+#     return render(request, 'bigArt/cart.html', {'cart': cart})
 @login_required
 def cart_detail(request):
-    cart = get_object_or_404(Cart, user=request.user)
-    return render(request, 'bigArt/cart.html', {'cart': cart})
+    cart_items = CartItem.objects.filter(user=request.user)
+    return render(request, 'bigArt/cart.html', {'cart_items': cart_items})
 
 
 
-@login_required
-def remove_from_cart(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    cart = get_object_or_404(Cart, user=request.user)
-    cart_item = get_object_or_404(CartItem, cart=cart, product=product)
-    if cart_item.quantity > 1:
-        cart_item.quantity -= 1
-        cart_item.save()
-    else:
-        cart_item.delete()
-    return redirect('view_cart')
+# def remove_from_cart(request, product_id):
+#     if request.method == 'POST':
+#         try:
+#             cart_item = Cart.objects.get(user=request.user, product_id=product_id)
+#             cart_item.delete()
+#             return JsonResponse({'status': 'success', 'message': 'Item removed from cart.'})
+#         except Cart.DoesNotExist:
+#             return JsonResponse({'status': 'error', 'message': 'Item not found in cart.'})
+#     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
+from django.views.decorators.csrf import csrf_exempt
+
+import json
+
+@csrf_exempt
+def remove_from_cart(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            product_id = data.get('product_id')
+            cart_item = CartItem.objects.get(product_id=product_id, user=request.user)
+            cart_item.delete()
+            return JsonResponse({'status': 'success'}, status=200)
+        except CartItem.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Item does not exist in cart'}, status=404)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
 
 @login_required
 def view_cart(request):
@@ -168,49 +209,96 @@ def view_cart(request):
 
 @login_required
 def checkout(request):
-    cart_items = CartItem.objects.filter(user=request.user)
+    try:
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_items = CartItem.objects.filter(cart=cart)
+    except Exception:
+        cart = None
+        cart_items = []
+    total_price = sum(item.total_price for item in cart_items)
     if request.method == 'POST':
-        form = CheckoutForm(request.POST)
-        if form.is_valid():
-            order = Order.objects.create(user=request.user, total_price=sum(item.product.price * item.quantity for item in cart_items))
-            cart_items.delete()  # Clear the cart after creating the order
-            return redirect('order_confirmation')
-    else:
-        form = CheckoutForm()
-    total_price = sum(item.product.price * item.quantity for item in cart_items)
-    return render(request, 'bigArt/checkout.html', {'cart_items': cart_items, 'total_price': total_price, 'form': form})
-
+        shipping_address = request.POST.get('shipping_address')
+        payment_method = request.POST.get('payment_method')
+        order = Order.objects.create(user=request.user, shipping_address=shipping_address, payment_method=payment_method, total_price=total_price, date_ordered=timezone.now())
+        for item in cart_items:
+            order.items.create(product=item.product, quantity=item.quantity, unit_price=item.unit_price, total_price=item.total_price)
+        cart_items.delete()
+        cart.delete()
+        return redirect('order_confirmation', order_id=order.id)
+    return render(request, 'bigArt/checkout.html', {'cart_items': cart_items, 'total_price': total_price})
 
 @login_required
-def order_confirmation(request):
-    order_details = request.session.get('order_details', {})
-    cart = request.session.get('cart', [])
-    total_price = sum(item['price'] for item in cart)
-    if request.method == 'POST':
-        # Clear the cart
-        request.session['cart'] = []
-        return render(request, 'bigArt/order_confirmation.html', {'order_details': order_details, 'total_price': total_price})
-    return render(request, 'bigArt/order_summary.html', {'order_details': order_details, 'cart': cart, 'total_price': total_price})
+def order_confirmation(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    order_details = order.items.all()
+    total_price = order.total_price
+    user = order.user
 
-
-# @login_required
-def checkout(request):
-    cart_items = CartItem.objects.filter(user=request.user)
     if request.method == 'POST':
-        form = CheckoutForm(request.POST)
+        if order.status == 'Pending':
+            # Reduce the product quantities
+            for item in order_details:
+                product = item.product
+                if product.quantity >= item.quantity:
+                    product.quantity -= item.quantity
+                    product.save()
+                else:
+                    return HttpResponse(f"Insufficient product quantity for {product.product_name}")
+
+            # Update order status
+            order.status = 'Confirmed'
+            order.save()
+
+            # Email content with user details
+            email_subject = 'Order Confirmed'
+            email_body = f'''
+            Order {order.id} has been confirmed.
+            User Details:
+            Username: {user.username}
+            Email: {user.email}
+            First Name: {user.first_name}
+            Last Name: {user.last_name}
+            Shipping Address: {order.shipping_address}
+            Total Price: {order.total_price}
+            '''
+
+            # Send email to admin
+            send_mail(
+                email_subject,
+                email_body,
+                settings.EMAIL_HOST_USER,
+                ['bigartug24@gmail.com'], 
+                fail_silently=False,
+            )
+
+            return HttpResponseRedirect(reverse('order_confirmation', args=[order.id]))
+
+        return HttpResponse("Order is already confirmed.")
+
+    return render(request, 'bigArt/order_confirm.html', {'order_details': order_details, 'total_price': total_price})
+def cancel_order(request):
+    cart = Cart.objects.get(user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    cart_items.delete()
+    cart.delete()
+    messages.success(request, 'Your order has been canceled.')
+    return redirect('shop')
+
+def gallery(request):
+    return render(request, 'bigArt/gallery.html')
+
+def contact(request):
+    return render(request, 'bigArt/contact.html')
+
+def review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
         if form.is_valid():
-            order = Order.objects.create(user=request.user, total_price=sum(item.product.price * item.quantity for item in cart_items))
-            cart_items.delete()  # Clear the cart after creating the order
-            return redirect('order_confirmation')
+            form.save()
+            return redirect('review')
     else:
-        form = CheckoutForm()
-    total_price = sum(item.product.price * item.quantity for item in cart_items)
-    return render(request, 'bigArt/checkout.html', {'cart_items': cart_items, 'total_price': total_price, 'form': form})
-
-# @login_required
-def order_confirmation(request):
-    orders = Order.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'bigArt/order_confirmation.html', {'orders': orders})
+        form = ReviewForm()
+    return render(request, 'bigArt/review.html', {'form': form})
 
 
 def paintings(request):

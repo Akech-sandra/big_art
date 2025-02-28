@@ -157,7 +157,7 @@
             <h2>{{ sculpture.product_name }}</h2>
             <p>Artist: {{ sculpture.artist }}</p>
             <p>UGX {{ sculpture.unit_price }}</p>
-            {% comment %} <p>{{ sculpture.description}}</p> {% endcomment %}
+            <p>{{ sculpture.short_description}}</p>
             <a href="{% url 'product_detail' sculpture.id %}" class="btn btn-custom">View Details</a>
             {% comment %} <button onclick="location.href='{% url 'sculpture_detail' sculpture.pk %}'">View Details</button> {% endcomment %}
 
@@ -178,3 +178,185 @@
 
 
 
+
+
+
+
+
+{% comment %} {% extends "bigArt/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    main {
+        margin-top: 6em;
+    }
+
+      
+    .filter-search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+    }
+    
+    .filter-search .search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .filter-search form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .filter-search input[type="text"],
+    .filter-search input[type="submit"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+    
+    .filter-search input[type="text"]:focus,
+    .filter-search input[type="submit"]:hover {
+        border-color: #fb8500;
+    }
+    
+    .filter-search input[type="submit"] {
+        background-color: #f4b400;
+        color: #fff;
+        cursor: pointer;
+    }
+    
+    .filter-search input[type="submit"]:hover {
+        background-color: #fb8500;
+    }
+    
+    .search-input {
+        flex-grow: 1;
+    }
+    
+
+    .sculptures-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 20px;
+    }
+
+    .sculpture-card {
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 30%;
+        margin: 20px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .sculpture-card img {
+        max-width: 100%;
+        border-radius: 5px;
+    }
+
+    .sculpture-card h2 {
+        font-size: 24px;
+        margin: 10px 0;
+    }
+
+    .sculpture-card p {
+        margin: 10px 0;
+    }
+
+    .sculpture-card button {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .sculpture-card .btn-custom {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Remove default link underline */
+        display: inline-block; /* Ensure it behaves like a button */
+        transition: background-color 0.3s ease;
+    }
+
+    .sculpture-card .btn-custom:hover {
+        background-color: #555; /* Darken background on hover */
+    }
+</style>
+
+<main>
+    <div class="filter-search">
+        <form method="get">
+            {{ sculpture_filter.form.as_p }}
+            <input type="submit" value="Search item" class="btn btn-primary"/>
+        </form>
+    </div>
+    
+    <div class="sculptures-grid">
+        {% for sculpture in sculpture %}
+        <div class="sculpture-card">
+            {% if sculpture.image %}
+            <img src="{{ sculpture.image.url }}" alt="{{ sculpture.name }}">
+            {% endif %}
+            <h2>{{ sculpture.product_name }}</h2>
+            <p>Artist: {{ sculpture.artist }}</p>
+            <p>UGX {{ sculpture.unit_price }}</p>
+            {% comment %} <p>{{ sculpture.description}}</p> {% endcomment %}
+            {% comment %} <a href="{% url 'product_detail' sculpture.id %}" class="btn btn-custom">View Details</a>
+            {% comment %} <button onclick="location.href='{% url 'sculpture_detail' sculpture.pk %}'">View Details</button> {% endcomment %}
+
+        {% comment %} </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <a href="#">&#171; Previous</a>
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">Next &#187;</a>
+    </div>
+</main>
+
+{% endblock %} {% endcomment %}
